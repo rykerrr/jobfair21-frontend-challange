@@ -10,7 +10,6 @@ namespace Platformer.Mechanics
         /// <summary>
         /// One end of the patrol path.
         /// </summary>
-        [Header("Preferences")]
         public Vector2 startPosition, endPosition;
 
         /// <summary>

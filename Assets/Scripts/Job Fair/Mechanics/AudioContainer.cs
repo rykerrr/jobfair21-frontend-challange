@@ -2,12 +2,12 @@
 using UnityEngine;
 using StringBuilder = System.Text.StringBuilder;
 
-namespace Platformer.Job_Fair.Mechanics
+namespace Platformer.JobFair.Mechanics
 {
     public class AudioContainer : MonoBehaviour
     {
         [SerializeField] private List<AudioClip> clips = new List<AudioClip>();
-
+        
         private readonly Dictionary<string, AudioClip> lookup = new Dictionary<string, AudioClip>();
 
         private void Awake()

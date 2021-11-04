@@ -1,7 +1,7 @@
 using Platformer.Model;
 using UnityEngine;
 
-namespace Platformer.JobFair.Debug
+namespace Platformer.JobFair.Debugging
 {
     public class GameDatabaseLogger : MonoBehaviour
     {

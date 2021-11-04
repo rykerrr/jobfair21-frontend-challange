@@ -1,5 +1,5 @@
 using Platformer.Gameplay;
-using Platformer.Job_Fair.Mechanics;
+using Platformer.JobFair.Mechanics;
 using UnityEngine;
 using static Platformer.Core.Simulation;
 

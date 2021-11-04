@@ -3,7 +3,7 @@ using Platformer.Gameplay;
 using static Platformer.Core.Simulation;
 using Platformer.Model;
 using Platformer.Core;
-using Platformer.Job_Fair.Mechanics;
+using Platformer.JobFair.Mechanics;
 
 namespace Platformer.Mechanics
 {
