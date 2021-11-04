@@ -19,6 +19,17 @@ namespace Platformer.UI
             if (_instance == null) _instance = this;
 
             inputUsername.onValueChanged.AddListener(OnUsernameInputChanged);
+
+            SetUsernameIfNotDefault();
+        }
+
+        private void SetUsernameIfNotDefault()
+        {
+            var user = GameDatabase.Instance.CurrentUser;
+            if (user.UsernameWasSet)
+            {
+                inputUsername.text = user.Username;
+            }
         }
 
         private void OnDestroy()

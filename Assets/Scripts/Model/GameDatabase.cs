@@ -26,7 +26,7 @@ namespace Platformer.Model
 
         public void SetUsername(string newName)
         {
-            CurrentUser.Username = newName;
+            CurrentUser.SetUsername(newName);
         }
 
         public void ResetScore()
@@ -43,10 +43,29 @@ namespace Platformer.Model
 
         public class UserData
         {
-            public string Username = "Player";
+            public static string DefaultUsername = "Player";
+            
             public int Tokens { get; internal set; }
             public int EnemiesKilled { get; internal set; }
             public int Score => Tokens * 10 + EnemiesKilled * 100;
+            public bool UsernameWasSet { get; private set; } = false;
+            
+            private string username;
+            
+
+            public string Username => username;
+            
+            public UserData()
+            {
+                username = DefaultUsername;
+            }
+
+            public void SetUsername(string username)
+            {
+                this.username = username;
+
+                UsernameWasSet = true;
+            }
             
         }
     }
