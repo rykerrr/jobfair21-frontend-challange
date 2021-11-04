@@ -25,18 +25,12 @@ namespace Platformer.Job_Fair.Mechanics
 
         public bool TryGetClip(string clipName, out AudioClip clip)
         {
-            Debug.Log("e");
-            
             clip = null;
             
             if (lookup.ContainsKey(clipName))
             {
-                Debug.Log("wee");
-                
                 clip = lookup[clipName];
 
-                Debug.Log(clip);
-                
                 return true;
             }
 
