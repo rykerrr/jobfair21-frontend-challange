@@ -73,7 +73,7 @@ namespace Platformer.Mechanics
             base.Update();
         }
 
-        void UpdateJumpState()
+        private void UpdateJumpState()
         {
             jump = false;
             switch (jumpState)
@@ -115,7 +115,7 @@ namespace Platformer.Mechanics
                 stopJump = false;
                 if (velocity.y > 0)
                 {
-                    velocity.y = velocity.y * model.jumpDeceleration;
+                    velocity.y *= model.jumpDeceleration;
                 }
             }
 
@@ -129,7 +129,7 @@ namespace Platformer.Mechanics
 
             targetVelocity = move * maxSpeed;
         }
-
+        
         public enum JumpState
         {
             Grounded,

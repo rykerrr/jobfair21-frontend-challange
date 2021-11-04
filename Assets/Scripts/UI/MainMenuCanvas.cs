@@ -21,6 +21,14 @@ namespace Platformer.UI
             inputUsername.onValueChanged.AddListener(OnUsernameInputChanged);
 
             SetUsernameIfNotDefault();
+
+            var usernameWasDefault = string.IsNullOrEmpty(inputUsername.text);
+            if (!usernameWasDefault) EnablePlay();
+        }
+
+        private void EnablePlay()
+        {
+            btnPlay.interactable = true;
         }
 
         private void SetUsernameIfNotDefault()
@@ -42,6 +50,8 @@ namespace Platformer.UI
         private void OnUsernameInputChanged(string newName)
         {
             GameDatabase.Instance.SetUsername(newName);
+
+            EnablePlay();
         }
 
         public void BtnPlayClicked()

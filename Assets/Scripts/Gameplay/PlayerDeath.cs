@@ -18,6 +18,7 @@ namespace Platformer.Gameplay
         public override void Execute()
         {
             var player = model.player;
+            
             if (player.health.IsAlive)
             {
                 player.health.Die();
@@ -28,6 +29,7 @@ namespace Platformer.Gameplay
 
                 if (player.audioSource && player.ouchAudio)
                     player.audioSource.PlayOneShot(player.ouchAudio);
+                
                 player.animator.SetTrigger(Hurt);
                 player.animator.SetBool(Dead, true);
                 Simulation.Schedule<PlayerSpawn>(2);

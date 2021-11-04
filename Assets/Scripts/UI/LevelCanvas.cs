@@ -27,7 +27,7 @@ namespace Platformer.UI
         {
             if (_instance == null) _instance = this;
 
-            PlayerDeath.OnExecute += PlayerDiedCallback;
+            // PlayerDeath.OnExecute += PlayerDiedCallback;
             PlayerEnteredVictoryZone.OnExecute += PlayerWonCallback;
 
             var gameDb = GameDatabase.Instance;
@@ -38,7 +38,7 @@ namespace Platformer.UI
 
         private void OnDestroy()
         {
-            PlayerDeath.OnExecute -= PlayerDiedCallback;
+            // PlayerDeath.OnExecute -= PlayerDiedCallback;
             PlayerEnteredVictoryZone.OnExecute -= PlayerWonCallback;
         }
 
