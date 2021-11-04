@@ -18,7 +18,16 @@ namespace Platformer.Gameplay
 
         public override void Execute()
         {
-            AudioSource.PlayClipAtPoint(token.tokenCollectAudio, token.transform.position);
+            var hasTokenCollectAudio = token.AudioContainer
+                .TryGetClip("Collectable", out var tokenCollectAudio);
+
+            if (!hasTokenCollectAudio) return;
+
+            // The main camera seems to generally be located at -9f so this moves it closer to the camera
+            // to make the sound louder, otherwise it's nearly negligible
+            var newPos = token.transform.position + new Vector3(0f, 0f, -9f);
+            
+            AudioSource.PlayClipAtPoint(tokenCollectAudio, newPos, 1f);
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Platformer.Gameplay
         {
             var jumpExists = player.AudioContainer.TryGetClip("jump", out var jumpAudio);
 
-            if (player.audioSource && jumpExists)
+            if (player.AudioSource && jumpExists)
             {
-                player.audioSource.PlayOneShot(jumpAudio);
+                player.AudioSource.PlayOneShot(jumpAudio);
             }
         }
     }

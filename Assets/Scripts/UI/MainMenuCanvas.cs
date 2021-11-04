@@ -11,13 +11,8 @@ namespace Platformer.UI
         [SerializeField] private TMP_InputField inputUsername;
         [SerializeField] private Button btnPlay = default;
 
-        private static MainMenuCanvas _instance;
-        public static MainMenuCanvas Instance => _instance;
-
         private void Awake()
         {
-            if (_instance == null) _instance = this;
-
             inputUsername.onValueChanged.AddListener(OnUsernameInputChanged);
 
             SetUsernameIfNotDefault();

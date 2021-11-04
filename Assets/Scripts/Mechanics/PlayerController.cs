@@ -13,45 +13,56 @@ namespace Platformer.Mechanics
     /// </summary>
     public class PlayerController : KinematicObject
     {
+        [Header("References, default will be loaded from GameObject if null")]
         [SerializeField] private AudioContainer audioContainer = default;
+        [SerializeField] private Health health;
+        [SerializeField] private Collider2D collider2d;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private Animator animator;
 
         public AudioContainer AudioContainer => audioContainer;
-        
+        public Health Health => health;
+        public AudioSource AudioSource => audioSource;
+        public Collider2D Collider2d => collider2d;
+        public Animator Animator => animator;
+
+
         /// <summary>
         /// Max horizontal speed of the player.
         /// </summary>
+        [Header("Preferences")]
         public float maxSpeed = 7;
         /// <summary>
         /// Initial jump velocity at the start of a jump.
         /// </summary>
         public float jumpTakeOffSpeed = 7;
 
-        public Health health;
-        /*internal new*/ public Collider2D collider2d;
-        /*internal new*/ public AudioSource audioSource;
-        public JumpState jumpState = JumpState.Grounded;
         public bool controlEnabled = true;
 
-        internal Animator animator;
-
         private readonly PlatformerModel model = Simulation.GetModel<PlatformerModel>();
-        private SpriteRenderer spriteRenderer;
-        private Vector2 move;
-        private bool stopJump;
-        private bool jump;
-        
+
         private static readonly int Grounded = Animator.StringToHash("grounded");
         private static readonly int VelocityX = Animator.StringToHash("velocityX");
 
-        public Bounds Bounds => collider2d.bounds;
+        private SpriteRenderer spriteRenderer;
+        public JumpState jumpState = JumpState.Grounded;
+        private Vector2 move;
+        private bool stopJump;
+        private bool jump;
 
         private void Awake()
         {
-            health = GetComponent<Health>();
-            audioSource = GetComponent<AudioSource>();
-            collider2d = GetComponent<Collider2D>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            animator = GetComponent<Animator>();
+            TryInjectDefaultReferences();
+        }
+
+        private void TryInjectDefaultReferences()
+        {
+            health ??= GetComponent<Health>();
+            audioSource ??= GetComponent<AudioSource>();
+            collider2d ??= GetComponent<Collider2D>();
+            spriteRenderer ??= GetComponent<SpriteRenderer>();
+            animator ??= GetComponent<Animator>();
+            audioContainer ??= GetComponent<AudioContainer>();
         }
 
         protected override void Update()

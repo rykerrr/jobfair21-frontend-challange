@@ -19,14 +19,8 @@ namespace Platformer.UI
 
         #endregion Fields and Properties
 
-
-        private static LevelCanvas _instance;
-        public static LevelCanvas Instance => _instance;
-
         private void Awake()
         {
-            if (_instance == null) _instance = this;
-
             PlayerDeath.OnExecute += PlayerDiedCallback;
             PlayerEnteredVictoryZone.OnExecute += PlayerWonCallback;
 

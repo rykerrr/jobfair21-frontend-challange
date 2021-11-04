@@ -19,9 +19,9 @@ namespace Platformer.Gameplay
         {
             var player = model.player;
             
-            if (player.health.IsAlive)
+            if (player.Health.IsAlive)
             {
-                player.health.Die();
+                player.Health.Die();
                 model.virtualCamera.m_Follow = null;
                 model.virtualCamera.m_LookAt = null;
                 player.controlEnabled = false;
@@ -29,11 +29,11 @@ namespace Platformer.Gameplay
 
                 var deathAudioExists = player.AudioContainer.TryGetClip("Hurt", out var deathAudio);
 
-                if (player.audioSource && deathAudioExists)
-                    player.audioSource.PlayOneShot(deathAudio);
+                if (player.AudioSource && deathAudioExists)
+                    player.AudioSource.PlayOneShot(deathAudio);
                 
-                player.animator.SetTrigger(Hurt);
-                player.animator.SetBool(Dead, true);
+                player.Animator.SetTrigger(Hurt);
+                player.Animator.SetBool(Dead, true);
                 Simulation.Schedule<PlayerSpawn>(2);
             }
         }

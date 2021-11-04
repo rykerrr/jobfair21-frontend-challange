@@ -9,9 +9,12 @@ namespace Platformer.Mechanics
     /// </summary>
     public class KinematicObject : MonoBehaviour
     {
+        
+        
         /// <summary>
         /// The minimum normal (dot product) considered suitable for the entity sit on.
         /// </summary>
+        [Header("Preferences")] 
         public float minGroundNormalY = .65f;
 
         /// <summary>

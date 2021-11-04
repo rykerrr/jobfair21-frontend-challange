@@ -13,14 +13,14 @@ namespace Platformer.Gameplay
 
         public override void Execute()
         {
-            enemy._collider.enabled = false;
-            enemy.control.enabled = false;
+            enemy.Collider2d.enabled = false;
+            enemy.AnimController.enabled = false;
 
             var hasDeathAudio = enemy.AudioContainer.TryGetClip("LandOnEnemy", out var deathAudio);
             
-            if (enemy._audio && hasDeathAudio)
+            if (enemy.AudioSource && hasDeathAudio)
             {
-                enemy._audio.PlayOneShot(deathAudio);
+                enemy.AudioSource.PlayOneShot(deathAudio);
             }
         }
     }

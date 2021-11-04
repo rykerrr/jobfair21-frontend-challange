@@ -267,13 +267,14 @@ MonoBehaviour:
   gravityModifier: 1
   velocity: {x: 0, y: 0}
   audioContainer: {fileID: 8554420211607976620}
+  health: {fileID: 6082575806313374961}
+  collider2d: {fileID: 1824045667}
+  audioSource: {fileID: 8509783501685719824}
+  animator: {fileID: 95391780594314510}
   maxSpeed: 3
   jumpTakeOffSpeed: 7
-  health: {fileID: 0}
-  collider2d: {fileID: 0}
-  audioSource: {fileID: 0}
-  jumpState: 0
   controlEnabled: 1
+  jumpState: 0
 --- !u!114 &6082575806313374961
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -273,6 +273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd654acc1f7894a509f3420e5c9ffea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1577774018119691272}
+  animController: {fileID: 2651140156555518892}
+  collider2d: {fileID: 1724124757368974630}
+  audioSource: {fileID: 5843668731025413174}
   audioContainer: {fileID: 71473244659070932}
   path: {fileID: 0}
 --- !u!114 &71473244659070932

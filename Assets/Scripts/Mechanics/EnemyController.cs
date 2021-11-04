@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Platformer.Gameplay;
+﻿using Platformer.Gameplay;
 using Platformer.Job_Fair.Mechanics;
 using UnityEngine;
 using static Platformer.Core.Simulation;
@@ -13,31 +11,40 @@ namespace Platformer.Mechanics
     [RequireComponent(typeof(AnimationController), typeof(Collider2D))]
     public class EnemyController : MonoBehaviour
     {
+        [Header("References, default will be loaded from GameObject if null")]
+        [SerializeField] private SpriteRenderer spriteRenderer = default;
+        [SerializeField] private AnimationController animController = default;
+        [SerializeField] private Collider2D collider2d = default;
+        [SerializeField] private AudioSource audioSource = default;
         [SerializeField] private AudioContainer audioContainer = default;
-
+        [SerializeField] private PatrolPath path = default;
+        
         public AudioContainer AudioContainer => audioContainer;
+        public SpriteRenderer SpriteRenderer => spriteRenderer;
+        public AnimationController AnimController => animController;
+        public Collider2D Collider2d => collider2d;
+        public AudioSource AudioSource => audioSource;
 
-        public PatrolPath path;
-
-        internal PatrolPath.Mover mover;
-        internal AnimationController control;
-        internal Collider2D _collider;
-        internal AudioSource _audio;
-        SpriteRenderer spriteRenderer;
-
-        public Bounds Bounds => _collider.bounds;
-
-        void Awake()
+        private PatrolPath.Mover mover;
+        
+        private void Awake()
         {
-            control = GetComponent<AnimationController>();
-            _collider = GetComponent<Collider2D>();
-            _audio = GetComponent<AudioSource>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
+            TryInjectDefaultReferences();
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+        private void TryInjectDefaultReferences()
+        {
+            animController ??= GetComponent<AnimationController>();
+            collider2d ??= GetComponent<Collider2D>();
+            audioSource ??= GetComponent<AudioSource>();
+            spriteRenderer ??= GetComponent<SpriteRenderer>();
+            audioContainer ??= GetComponent<AudioContainer>();
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
         {
             var player = collision.gameObject.GetComponent<PlayerController>();
+            
             if (player != null)
             {
                 var ev = Schedule<PlayerEnemyCollision>();
@@ -46,12 +53,13 @@ namespace Platformer.Mechanics
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (path != null)
             {
-                if (mover == null) mover = path.CreateMover(control.maxSpeed * 0.5f);
-                control.move.x = Mathf.Clamp(mover.Position.x - transform.position.x, -1, 1);
+                mover ??= path.CreateMover(animController.maxSpeed * 0.5f);
+
+                animController.move.x = Mathf.Clamp(mover.Position.x - transform.position.x, -1, 1);
             }
         }
 

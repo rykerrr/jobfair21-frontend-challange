@@ -19,7 +19,7 @@ namespace Platformer.Gameplay
 
         public override void Execute()
         {
-            model.player.animator.SetTrigger(Victory);
+            model.player.Animator.SetTrigger(Victory);
             model.player.controlEnabled = false;
         }
     }

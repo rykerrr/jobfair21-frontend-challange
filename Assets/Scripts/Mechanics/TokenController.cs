@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Platformer.Mechanics
@@ -11,27 +12,34 @@ namespace Platformer.Mechanics
     /// </summary>
     public class TokenController : MonoBehaviour
     {
+        [Header("Preferences")]
         [Tooltip("Frames per second at which tokens are animated.")]
-        public float frameRate = 12;
+        [SerializeField] private float frameRate = 12;
+        [SerializeField] private Transform tokensParent = default;
         [Tooltip("Instances of tokens which are animated. If empty, token instances are found and loaded at runtime.")]
-        public TokenInstance[] tokens;
-
+        [SerializeField] private List<TokenInstance> tokens = new List<TokenInstance>();
+        
         float nextFrameTime = 0;
 
         [ContextMenu("Find All Tokens")]
-        private void FindAllTokensInScene()
+        private void ResetTokensAndFindAllTokensInScene()
         {
-            tokens = UnityEngine.Object.FindObjectsOfType<TokenInstance>();
+            tokens.Clear();
+            
+            foreach (TokenInstance token in tokensParent)
+            {
+                tokens.Add(token);
+            }
         }
 
         private void Awake()
         {
             //if tokens are empty, find all instances.
             //if tokens are not empty, they've been added at editor time.
-            if (tokens.Length == 0)
-                FindAllTokensInScene();
+            if (tokens.Count == 0)
+                ResetTokensAndFindAllTokensInScene();
             //Register all tokens so they can work with this controller.
-            for (var i = 0; i < tokens.Length; i++)
+            for (var i = 0; i < tokens.Count; i++)
             {
                 tokens[i].tokenIndex = i;
                 tokens[i].controller = this;
@@ -44,14 +52,14 @@ namespace Platformer.Mechanics
             if (Time.time - nextFrameTime > (1f / frameRate))
             {
                 //update all tokens with the next animation frame.
-                for (var i = 0; i < tokens.Length; i++)
+                for (var i = 0; i < tokens.Count; i++)
                 {
                     var token = tokens[i];
                     //if token is null, it has been disabled and is no longer animated.
                     if (token != null)
                     {
-                        token._renderer.sprite = token.sprites[token.frame];
-                        if (token.collected && token.frame == token.sprites.Length - 1)
+                        token.SpriteRenderer.sprite = token.sprites[token.frame];
+                        if (token.Collected && token.frame == token.sprites.Length - 1)
                         {
                             token.gameObject.SetActive(false);
                             tokens[i] = null;
