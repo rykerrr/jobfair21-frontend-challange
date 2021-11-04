@@ -13,8 +13,12 @@ namespace Platformer.Gameplay
 
         public override void Execute()
         {
-            if (player.audioSource && player.jumpAudio)
-                player.audioSource.PlayOneShot(player.jumpAudio);
+            var jumpExists = player.AudioContainer.TryGetClip("jump", out var jumpAudio);
+
+            if (player.audioSource && jumpExists)
+            {
+                player.audioSource.PlayOneShot(jumpAudio);
+            }
         }
     }
 }

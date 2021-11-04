@@ -15,8 +15,13 @@ namespace Platformer.Gameplay
         {
             enemy._collider.enabled = false;
             enemy.control.enabled = false;
-            if (enemy._audio && enemy.ouch)
-                enemy._audio.PlayOneShot(enemy.ouch);
+
+            var hasDeathAudio = enemy.AudioContainer.TryGetClip("LandOnEnemy", out var deathAudio);
+            
+            if (enemy._audio && hasDeathAudio)
+            {
+                enemy._audio.PlayOneShot(deathAudio);
+            }
         }
     }
 }

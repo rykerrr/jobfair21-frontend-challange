@@ -36,9 +36,9 @@ namespace Platformer.Mechanics
         /// </summary>
         public bool stopJump;
 
-        SpriteRenderer spriteRenderer;
-        Animator animator;
-        PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        private SpriteRenderer spriteRenderer;
+        private Animator animator;
+        private PlatformerModel model = Simulation.GetModel<PlatformerModel>();
         
         private static readonly int Grounded = Animator.StringToHash("grounded");
         private static readonly int VelocityX = Animator.StringToHash("velocityX");

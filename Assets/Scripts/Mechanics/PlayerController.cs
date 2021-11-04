@@ -3,6 +3,7 @@ using Platformer.Gameplay;
 using static Platformer.Core.Simulation;
 using Platformer.Model;
 using Platformer.Core;
+using Platformer.Job_Fair.Mechanics;
 
 namespace Platformer.Mechanics
 {
@@ -12,10 +13,10 @@ namespace Platformer.Mechanics
     /// </summary>
     public class PlayerController : KinematicObject
     {
-        public AudioClip jumpAudio;
-        public AudioClip respawnAudio;
-        public AudioClip ouchAudio;
+        [SerializeField] private AudioContainer audioContainer = default;
 
+        public AudioContainer AudioContainer => audioContainer;
+        
         /// <summary>
         /// Max horizontal speed of the player.
         /// </summary>
@@ -25,18 +26,19 @@ namespace Platformer.Mechanics
         /// </summary>
         public float jumpTakeOffSpeed = 7;
 
-        public JumpState jumpState = JumpState.Grounded;
-        private bool stopJump;
+        public Health health;
         /*internal new*/ public Collider2D collider2d;
         /*internal new*/ public AudioSource audioSource;
-        public Health health;
+        public JumpState jumpState = JumpState.Grounded;
         public bool controlEnabled = true;
 
-        bool jump;
-        Vector2 move;
-        SpriteRenderer spriteRenderer;
         internal Animator animator;
-        readonly PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+
+        private readonly PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        private SpriteRenderer spriteRenderer;
+        private Vector2 move;
+        private bool stopJump;
+        private bool jump;
         
         private static readonly int Grounded = Animator.StringToHash("grounded");
         private static readonly int VelocityX = Animator.StringToHash("velocityX");
@@ -56,6 +58,7 @@ namespace Platformer.Mechanics
         {
             if (controlEnabled)
             {
+                // Input
                 move.x = Input.GetAxis("Horizontal");
                 if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
                     jumpState = JumpState.PrepareToJump;
@@ -69,12 +72,16 @@ namespace Platformer.Mechanics
             {
                 move.x = 0;
             }
+            
+            // State control 
             UpdateJumpState();
+            
             base.Update();
         }
 
         private void UpdateJumpState()
         {
+            // State control
             jump = false;
             switch (jumpState)
             {
@@ -105,6 +112,7 @@ namespace Platformer.Mechanics
 
         protected override void ComputeVelocity()
         {
+            // State control
             if (jump && IsGrounded)
             {
                 velocity.y = jumpTakeOffSpeed * model.jumpModifier;
@@ -119,6 +127,7 @@ namespace Platformer.Mechanics
                 }
             }
 
+            // Graphics
             if (move.x > 0.01f)
                 spriteRenderer.flipX = false;
             else if (move.x < -0.01f)
@@ -127,6 +136,7 @@ namespace Platformer.Mechanics
             animator.SetBool(Grounded, IsGrounded);
             animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / maxSpeed);
 
+            // State control
             targetVelocity = move * maxSpeed;
         }
         

@@ -24,11 +24,13 @@ namespace Platformer.Gameplay
                 player.health.Die();
                 model.virtualCamera.m_Follow = null;
                 model.virtualCamera.m_LookAt = null;
-                // player.collider.enabled = false;
                 player.controlEnabled = false;
+                // player.collider.enabled = false;
 
-                if (player.audioSource && player.ouchAudio)
-                    player.audioSource.PlayOneShot(player.ouchAudio);
+                var deathAudioExists = player.AudioContainer.TryGetClip("Hurt", out var deathAudio);
+
+                if (player.audioSource && deathAudioExists)
+                    player.audioSource.PlayOneShot(deathAudio);
                 
                 player.animator.SetTrigger(Hurt);
                 player.animator.SetBool(Dead, true);

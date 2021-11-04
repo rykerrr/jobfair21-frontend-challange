@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Platformer.Gameplay;
+using Platformer.Job_Fair.Mechanics;
 using UnityEngine;
 using static Platformer.Core.Simulation;
 
@@ -12,8 +13,11 @@ namespace Platformer.Mechanics
     [RequireComponent(typeof(AnimationController), typeof(Collider2D))]
     public class EnemyController : MonoBehaviour
     {
+        [SerializeField] private AudioContainer audioContainer = default;
+
+        public AudioContainer AudioContainer => audioContainer;
+
         public PatrolPath path;
-        public AudioClip ouch;
 
         internal PatrolPath.Mover mover;
         internal AnimationController control;

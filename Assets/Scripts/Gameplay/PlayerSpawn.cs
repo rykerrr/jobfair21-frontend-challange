@@ -11,7 +11,7 @@ namespace Platformer.Gameplay
     public class PlayerSpawn : Simulation.Event<PlayerSpawn>
     {
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
-        
+
         private static readonly int Dead = Animator.StringToHash("dead");
 
         public override void Execute()
@@ -19,8 +19,14 @@ namespace Platformer.Gameplay
             var player = model.player;
             player.collider2d.enabled = true;
             player.controlEnabled = false;
-            if (player.audioSource && player.respawnAudio)
-                player.audioSource.PlayOneShot(player.respawnAudio);
+
+            var hasRespawnAudio = player.AudioContainer.TryGetClip("Death", out var respawnAudio);
+
+            if (player.audioSource && hasRespawnAudio)
+            {
+                player.audioSource.PlayOneShot(respawnAudio);
+            }
+            
             player.health.Increment();
             player.Teleport(model.spawnPoint.transform.position);
             player.jumpState = PlayerController.JumpState.Grounded;
