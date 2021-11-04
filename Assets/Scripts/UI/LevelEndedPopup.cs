@@ -15,14 +15,14 @@ namespace Platformer.UI
         [SerializeField] private TMP_Text lblEnemiesKilled = default;
         [SerializeField] private TMP_Text lblUsername;
         [SerializeField] private TMP_Text lblScore = default;
-        [SerializeField] private TMP_Text lblTitle;
+        [SerializeField] private TMP_Text lblEndText;
 
         [SerializeField] private Color titleLostColor = default;
         [SerializeField] private Color titleWonColor = default;
         
         #endregion Fields and Properties
 
-        public void Show(bool won)
+        private void Show()
         {
             blurredBackground.Show();
             gameObject.SetActive(true);
@@ -31,6 +31,34 @@ namespace Platformer.UI
             lblEnemiesKilled.text = GameDatabase.Instance.CurrentUser.EnemiesKilled.ToString();
             lblUsername.text = GameDatabase.Instance.CurrentUser.Username;
             lblScore.text = GameDatabase.Instance.CurrentUser.Score.ToString();
+        }
+        
+        private void UpdateEndTextLabel(bool won)
+        {
+            switch (won)
+            {
+                case true:
+                {
+                    lblEndText.text = "LEVEL WON";
+                    lblEndText.color = titleWonColor;
+
+                    break;
+                }
+                case false:
+                {
+                    lblEndText.text = "LEVEL LOST";
+                    lblEndText.color = titleLostColor;
+
+                    break;
+                }
+            }
+        }
+
+        public void Show(bool won)
+        {
+            UpdateEndTextLabel(won);
+
+            Show();
         }
 
         #region Event Handlers
