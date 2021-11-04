@@ -1,3 +1,4 @@
+using System;
 using Platformer.Core;
 using Platformer.Model;
 using UnityEngine;
@@ -28,6 +29,11 @@ namespace Platformer.Mechanics
         private void OnDisable()
         {
             if (Instance == this) Instance = null;
+        }
+
+        private void OnDestroy()
+        {
+            Simulation.Clear();
         }
 
         private void Update()

@@ -28,5 +28,13 @@ namespace Platformer.JobFair.Controllers
             Time.timeScale = 1f;
             playerInput.enabled = true;
         }
+
+        /// <summary>
+        /// Prevent possible runtime errors occurring due to timeScale being static by resetting it
+        /// </summary>
+        private void OnDestroy()
+        {
+            Time.timeScale = 1f;
+        }
     }
 }
