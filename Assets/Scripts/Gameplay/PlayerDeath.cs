@@ -1,5 +1,6 @@
 ﻿using Platformer.Core;
 using Platformer.Model;
+using UnityEngine;
 
 namespace Platformer.Gameplay
 {
@@ -10,6 +11,9 @@ namespace Platformer.Gameplay
     public class PlayerDeath : Simulation.Event<PlayerDeath>
     {
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        
+        private static readonly int Hurt = Animator.StringToHash("hurt");
+        private static readonly int Dead = Animator.StringToHash("dead");
 
         public override void Execute()
         {
@@ -24,8 +28,8 @@ namespace Platformer.Gameplay
 
                 if (player.audioSource && player.ouchAudio)
                     player.audioSource.PlayOneShot(player.ouchAudio);
-                player.animator.SetTrigger("hurt");
-                player.animator.SetBool("dead", true);
+                player.animator.SetTrigger(Hurt);
+                player.animator.SetBool(Dead, true);
                 Simulation.Schedule<PlayerSpawn>(2);
             }
         }

@@ -39,6 +39,9 @@ namespace Platformer.Mechanics
         SpriteRenderer spriteRenderer;
         Animator animator;
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        
+        private static readonly int Grounded = Animator.StringToHash("grounded");
+        private static readonly int VelocityX = Animator.StringToHash("velocityX");
 
         protected virtual void Awake()
         {
@@ -67,8 +70,8 @@ namespace Platformer.Mechanics
             else if (move.x < -0.01f)
                 spriteRenderer.flipX = true;
 
-            animator.SetBool("grounded", IsGrounded);
-            animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
+            animator.SetBool(Grounded, IsGrounded);
+            animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / maxSpeed);
 
             targetVelocity = move * maxSpeed;
         }

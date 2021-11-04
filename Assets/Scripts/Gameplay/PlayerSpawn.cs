@@ -1,6 +1,7 @@
 using Platformer.Core;
 using Platformer.Mechanics;
 using Platformer.Model;
+using UnityEngine;
 
 namespace Platformer.Gameplay
 {
@@ -10,6 +11,8 @@ namespace Platformer.Gameplay
     public class PlayerSpawn : Simulation.Event<PlayerSpawn>
     {
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        
+        private static readonly int Dead = Animator.StringToHash("dead");
 
         public override void Execute()
         {
@@ -21,7 +24,7 @@ namespace Platformer.Gameplay
             player.health.Increment();
             player.Teleport(model.spawnPoint.transform.position);
             player.jumpState = PlayerController.JumpState.Grounded;
-            player.animator.SetBool("dead", false);
+            player.animator.SetBool(Dead, false);
             model.virtualCamera.m_Follow = player.transform;
             model.virtualCamera.m_LookAt = player.transform;
             Simulation.Schedule<EnablePlayerInput>(2f);

@@ -1,6 +1,7 @@
 using Platformer.Core;
 using Platformer.Mechanics;
 using Platformer.Model;
+using UnityEngine;
 
 namespace Platformer.Gameplay
 {
@@ -13,10 +14,12 @@ namespace Platformer.Gameplay
         public VictoryZone victoryZone;
 
         PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        
+        private static readonly int Victory = Animator.StringToHash("victory");
 
         public override void Execute()
         {
-            model.player.animator.SetTrigger("victory");
+            model.player.animator.SetTrigger(Victory);
             model.player.controlEnabled = false;
         }
     }
