@@ -9,11 +9,11 @@ namespace Platformer.UI
     {
         #region Fields and Properties
 
-        [SerializeField] private PauseMenu pauseMenu;
-        [SerializeField] private LevelEndedPopup levelEndedPopup;
-        [SerializeField] private TMP_Text lblTokens;
-        [SerializeField] private TMP_Text lblEnemiesKilled;
-        [SerializeField] private TMP_Text lblUsername;
+        [SerializeField] private PauseMenu pauseMenu = default;
+        [SerializeField] private LevelEndedPopup levelEndedPopup = default;
+        [SerializeField] private TMP_Text lblTokens = default;
+        [SerializeField] private TMP_Text lblEnemiesKilled = default;
+        [SerializeField] private TMP_Text lblUsername = default;
         #endregion Fields and Properties
         
         

@@ -5,7 +5,7 @@ namespace Platformer.BlurredScreenshot
 {
    public class BlurredBackground : MonoBehaviour
    {
-      [SerializeField] private RawImage rawBackground;
+      [SerializeField] private RawImage rawBackground = default;
       
       public void Show()
       {

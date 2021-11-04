@@ -11,14 +11,14 @@ namespace Platformer.UI
         #region Fields and Properties
         
         [SerializeField] private BlurredBackground blurredBackground;
-        [SerializeField] private TMP_Text lblTokens;
-        [SerializeField] private TMP_Text lblEnemiesKilled;
+        [SerializeField] private TMP_Text lblTokens = default;
+        [SerializeField] private TMP_Text lblEnemiesKilled = default;
         [SerializeField] private TMP_Text lblUsername;
-        [SerializeField] private TMP_Text lblScore;
+        [SerializeField] private TMP_Text lblScore = default;
         [SerializeField] private TMP_Text lblTitle;
 
-        [SerializeField] private Color titleLostColor;
-        [SerializeField] private Color titleWonColor;
+        [SerializeField] private Color titleLostColor = default;
+        [SerializeField] private Color titleWonColor = default;
         
         #endregion Fields and Properties
 

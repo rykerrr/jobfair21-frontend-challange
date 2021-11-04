@@ -9,7 +9,7 @@ namespace Platformer.UI
     public class MainMenuCanvas : MonoBehaviour
     {
         [SerializeField] private TMP_InputField inputUsername;
-        [SerializeField] private Button btnPlay;
+        [SerializeField] private Button btnPlay = default;
 
         private static MainMenuCanvas _instance;
         public static MainMenuCanvas Instance => _instance;
