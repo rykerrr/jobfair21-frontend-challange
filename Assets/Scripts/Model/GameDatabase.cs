@@ -43,7 +43,7 @@ namespace Platformer.Model
 
         public class UserData
         {
-            public string Username = "";
+            public string Username = "Player";
             public int Tokens { get; internal set; }
             public int EnemiesKilled { get; internal set; }
             public int Score => Tokens * 10 + EnemiesKilled * 100;

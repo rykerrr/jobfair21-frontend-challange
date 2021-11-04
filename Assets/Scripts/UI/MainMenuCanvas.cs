@@ -14,12 +14,11 @@ namespace Platformer.UI
         private static MainMenuCanvas _instance;
         public static MainMenuCanvas Instance => _instance;
 
-        void Awake()
+        private void Awake()
         {
             if (_instance == null) _instance = this;
 
             inputUsername.onValueChanged.AddListener(OnUsernameInputChanged);
-            inputUsername.text = GameDatabase.Instance.CurrentUser.Username;
         }
 
         private void OnDestroy()

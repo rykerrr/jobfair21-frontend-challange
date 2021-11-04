@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Platformer.Gameplay;
 using static Platformer.Core.Simulation;
 using Platformer.Model;
@@ -45,7 +43,7 @@ namespace Platformer.Mechanics
 
         public Bounds Bounds => collider2d.bounds;
 
-        void Awake()
+        private void Awake()
         {
             health = GetComponent<Health>();
             audioSource = GetComponent<AudioSource>();

@@ -14,7 +14,7 @@ public class EmitParticlesOnLand : MonoBehaviour
 
     ParticleSystem p;
 
-    void Start()
+    private void Start()
     {
         p = GetComponent<ParticleSystem>();
 

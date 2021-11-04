@@ -1,4 +1,6 @@
+using System;
 using Platformer.BlurredScreenshot;
+using Platformer.JobFair.Controllers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,9 +8,9 @@ namespace Platformer.UI
 {
     public class PauseMenu : MonoBehaviour
     {
-
         [SerializeField] private BlurredBackground blurredBackground;
-
+        [SerializeField] private GamePauseStateController gamePauseStateController;
+        
         public void Show()
         {
             blurredBackground.Show();
@@ -25,6 +27,7 @@ namespace Platformer.UI
 
         public void BtnResumeClicked()
         {
+            gamePauseStateController.Resume();
         }
 
         public void BtnMainMenuClicked()

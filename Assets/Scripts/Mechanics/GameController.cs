@@ -20,17 +20,17 @@ namespace Platformer.Mechanics
         //conveniently configured inside the inspector.
         public PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
-        void OnEnable()
+        private void OnEnable()
         {
             Instance = this;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (Instance == this) Instance = null;
         }
 
-        void Update()
+        private void Update()
         {
             if (Instance == this) Simulation.Tick();
         }

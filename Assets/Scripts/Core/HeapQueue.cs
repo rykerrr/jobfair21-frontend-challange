@@ -61,9 +61,9 @@ namespace Platformer.Core
         }
 
 
-        int Compare(T A, T B) => A.CompareTo(B);
+        static int Compare(T A, T B) => A.CompareTo(B);
 
-        void SiftDown(int startpos, int pos)
+        private void SiftDown(int startpos, int pos)
         {
             //preserve the newly added item.
             var newitem = items[pos];
@@ -82,7 +82,7 @@ namespace Platformer.Core
             items[pos] = newitem;
         }
 
-        void SiftUp()
+        private void SiftUp()
         {
             var endpos = items.Count;
             var startpos = 0;

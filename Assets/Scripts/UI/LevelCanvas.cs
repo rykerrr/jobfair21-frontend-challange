@@ -1,4 +1,5 @@
 using Platformer.Gameplay;
+using Platformer.JobFair.Controllers;
 using Platformer.Model;
 using TMPro;
 using UnityEngine;
@@ -9,25 +10,30 @@ namespace Platformer.UI
     {
         #region Fields and Properties
 
+        [SerializeField] private GamePauseStateController gamePauseStateController = default;
         [SerializeField] private PauseMenu pauseMenu = default;
         [SerializeField] private LevelEndedPopup levelEndedPopup = default;
         [SerializeField] private TMP_Text lblTokens = default;
         [SerializeField] private TMP_Text lblEnemiesKilled = default;
         [SerializeField] private TMP_Text lblUsername = default;
+
         #endregion Fields and Properties
-        
-        
+
+
         private static LevelCanvas _instance;
         public static LevelCanvas Instance => _instance;
 
-        void Awake()
+        private void Awake()
         {
             if (_instance == null) _instance = this;
 
             PlayerDeath.OnExecute += PlayerDiedCallback;
             PlayerEnteredVictoryZone.OnExecute += PlayerWonCallback;
-            
-            GameDatabase.Instance.ResetScore();
+
+            var gameDb = GameDatabase.Instance;
+            gameDb.ResetScore();
+
+            lblUsername.text = gameDb.CurrentUser.Username;
         }
 
         private void OnDestroy()
@@ -41,9 +47,21 @@ namespace Platformer.UI
             lblTokens.text = GameDatabase.Instance.CurrentUser.Tokens.ToString();
             lblEnemiesKilled.text = GameDatabase.Instance.CurrentUser.EnemiesKilled.ToString();
         }
+        
+        private void OnEnable()
+        {
+            gamePauseStateController.onPause += pauseMenu.Show;
+            gamePauseStateController.onResume += pauseMenu.Hide;
+        }
+
+        private void OnDisable()
+        {
+            gamePauseStateController.onPause -= pauseMenu.Show;
+            gamePauseStateController.onResume -= pauseMenu.Hide;
+        }
 
         #region Event Handlers
-        
+
         private void PlayerDiedCallback(PlayerDeath playerDeath)
         {
             levelEndedPopup.Show(false);
@@ -56,7 +74,7 @@ namespace Platformer.UI
 
         public void BtnPauseClicked()
         {
-            pauseMenu.Show();
+            gamePauseStateController.Pause();
         }
 
         #endregion Event Handlers
