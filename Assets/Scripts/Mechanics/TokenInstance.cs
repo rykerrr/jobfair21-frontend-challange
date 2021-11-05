@@ -1,5 +1,6 @@
 using Platformer.Gameplay;
 using Platformer.JobFair.Mechanics;
+using Platformer.JobFair.Mechanics.Collisions;
 using UnityEngine;
 using static Platformer.Core.Simulation;
 
@@ -16,58 +17,59 @@ namespace Platformer.Mechanics
     {
         [Header("References, default will be loaded from GameObject if null")]
         [SerializeField] private AudioContainer audioContainer = default;
+        [SerializeField] private SpriteRenderer spriteRenderer;
 
         [Header("Preferences")]
         [Tooltip("If true, animation will start at a random position in the sequence.")]
         [SerializeField] private bool randomAnimationStartTime = false;
         [Tooltip("List of frames that make up the animation.")]
-        [SerializeField] private Sprite[] idleAnimation, collectedAnimation;
+        public Sprite[] idleAnimation, collectedAnimation;
 
+        [Header("Updated by the controller")]
         //active frame in animation, updated by the controller.
         public int frame = 0;
         
         //unique index which is assigned by the TokenController in a scene.
-        public int tokenIndex = -1;
-        public TokenController controller;
-        
+        private TokenController tokenController = default;
+        private ICollisionProcessor collisionProcessor = default;
+        private int tokenIndex = -1;
+
         internal Sprite[] sprites = new Sprite[0];
-        private SpriteRenderer spriteRenderer;
         private bool collected = false;
 
+        public TokenController TokenController => tokenController;
         public AudioContainer AudioContainer => audioContainer;
         public SpriteRenderer SpriteRenderer => spriteRenderer;
-        public bool Collected => collected;
+        
+        public bool Collected
+        {
+            get => collected;
+            set => collected = value;
+        }
 
         private void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            collisionProcessor = GetComponent<ICollisionProcessor>();
+            
             if (randomAnimationStartTime)
                 frame = Random.Range(0, sprites.Length);
+            
             sprites = idleAnimation;
         }
 
-        private void OnTriggerEnter2D(Collider2D other)
+        public void InitToken(TokenController tokenController, int tokenIndex)
         {
-            //only exectue OnPlayerEnter if the player collides with this token.
-            var player = other.gameObject.GetComponent<PlayerController>();
-            if (player != null) OnPlayerEnter(player);
-        }
-
-        private void OnPlayerEnter(PlayerController player)
-        {
-            if (collected) return;
-            //disable the gameObject and remove it from the controller update list.
-            frame = 0;
-            sprites = collectedAnimation;
-            if (controller != null)
-                collected = true;
-            //send an event into the gameplay system to perform some behaviour.
-            var ev = Schedule<PlayerTokenCollision>();
-            ev.token = this;
-            ev.player = player;
+            this.tokenController = tokenController;
+            this.tokenIndex = tokenIndex;
         }
         
-        #if UNITY_EDITOR
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            collisionProcessor.ProcessCollision(other.gameObject);
+        }
+
+#if UNITY_EDITOR
         /// <summary>
         /// Token instance wasn't a prefab and there's a 100 tokens meaning either a 100 reference sets or this
         /// </summary>
@@ -76,6 +78,6 @@ namespace Platformer.Mechanics
         {
             audioContainer = GetComponent<AudioContainer>();
         }
-        #endif
+#endif
     }
 }

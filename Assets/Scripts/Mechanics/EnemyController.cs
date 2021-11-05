@@ -1,5 +1,6 @@
 ﻿using Platformer.Gameplay;
 using Platformer.JobFair.Mechanics;
+using Platformer.JobFair.Mechanics.Collisions;
 using UnityEngine;
 using static Platformer.Core.Simulation;
 
@@ -24,6 +25,7 @@ namespace Platformer.Mechanics
         public Collider2D Collider2d => collider2d;
         public AudioSource AudioSource => audioSource;
 
+        private ICollisionProcessor collisionProcessor;
         private PatrolPath.Mover mover;
         
         private void Awake()
@@ -31,30 +33,21 @@ namespace Platformer.Mechanics
             TryInjectDefaultReferences();
         }
 
+
         private void TryInjectDefaultReferences()
         {
+            collisionProcessor = GetComponent<ICollisionProcessor>();
+            
             animController ??= GetComponent<AnimationController>();
             collider2d ??= GetComponent<Collider2D>();
             audioSource ??= GetComponent<AudioSource>();
             spriteRenderer ??= GetComponent<SpriteRenderer>();
             audioContainer ??= GetComponent<AudioContainer>();
         }
-
+        
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            ProcessCollision(collision.gameObject);
-        }
-
-        private void ProcessCollision(GameObject other)
-        {
-            var player = other.GetComponent<PlayerController>();
-
-            if (player != null)
-            {
-                var ev = Schedule<PlayerEnemyCollision>();
-                ev.player = player;
-                ev.enemy = this;
-            }
+            collisionProcessor.ProcessCollision(collision.gameObject);
         }
 
         private void Update()
