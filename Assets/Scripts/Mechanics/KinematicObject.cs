@@ -7,10 +7,8 @@ namespace Platformer.Mechanics
     /// <summary>
     /// Implements game physics for some in game entity.
     /// </summary>
-    public class KinematicObject : MonoBehaviour
+    public abstract class KinematicObject : MonoBehaviour
     {
-        
-        
         /// <summary>
         /// The minimum normal (dot product) considered suitable for the entity sit on.
         /// </summary>
@@ -96,10 +94,7 @@ namespace Platformer.Mechanics
             ComputeVelocity();
         }
 
-        protected virtual void ComputeVelocity()
-        {
-
-        }
+        protected abstract void ComputeVelocity();
 
         protected virtual void FixedUpdate()
         {
