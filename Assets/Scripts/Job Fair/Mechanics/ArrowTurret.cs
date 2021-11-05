@@ -1,3 +1,5 @@
+using Platformer.Core;
+using Platformer.Job_Fair.Gameplay;
 using Platformer.JobFair.Utility.Timers;
 using UnityEngine;
 
@@ -18,13 +20,19 @@ namespace Platformer.JobFair.Mechanics
         [SerializeField] private AudioContainer audioContainer = default;
         #endregion
         
+        public Transform FirePoint => firePoint;
+        public ArrowProjectile ArrowPrefab => arrowPrefab;
+        public AudioSource AudioSource => audioSource;
+        public AudioContainer AudioContainer => audioContainer;
+        
         private ITimer timer;
 
         /// <summary>
         /// Returns whether the turret can fire or not, this is set by a timer
         /// </summary>
         public bool CanFire { get; private set; } = true;
-        
+
+
         private void Awake()
         {
             InitTimer();
@@ -54,12 +62,8 @@ namespace Platformer.JobFair.Mechanics
         /// </summary>
         private void CreateAndInitArrow()
         {
-            var hasWhoosh = audioContainer.TryGetClip("crossbow_arrow_whoosh", out var whooshClip);
-            if(hasWhoosh) audioSource.PlayOneShot(whooshClip);
-            
-            var arrowClone = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
-
-            arrowClone.Init(firePoint.right);
+            var ev = Simulation.Schedule<ArrowFired>();
+            ev.turret = this;
         }
     }
 }
