@@ -80,7 +80,7 @@ namespace Platformer.Mechanics
             if (controlEnabled)
             {
                 move.x = inputProcessor.GetAxis("Horizontal");
-                var jumpButtonState = inputProcessor.GetButtonState("jump");
+                var jumpButtonState = inputProcessor.GetButtonState("Jump");
 
                 ProcessJumping(jumpButtonState);
             }
@@ -191,13 +191,18 @@ namespace Platformer.Mechanics
             else if (move.x < -0.01f)
                 spriteRenderer.flipX = true;
 
-            animator.SetBool(Grounded, IsGrounded);
-            animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / maxSpeed);
+            UpdateAnimatorParameters();
 
             // State control
             targetVelocity = move * maxSpeed;
         }
-        
+
+        private void UpdateAnimatorParameters()
+        {
+            animator.SetBool(Grounded, IsGrounded);
+            animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / maxSpeed);
+        }
+
         public enum JumpState
         {
             Grounded,

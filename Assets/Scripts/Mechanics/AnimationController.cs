@@ -13,28 +13,18 @@ namespace Platformer.Mechanics
     public class AnimationController : KinematicObject
     {
         /// <summary>
+        /// Max jump velocity
+        /// </summary>
+        [SerializeField] private float jumpTakeOffSpeed = 7;
+
+        /// <summary>
         /// Max horizontal speed.
         /// </summary>
         public float maxSpeed = 7;
         /// <summary>
-        /// Max jump velocity
-        /// </summary>
-        public float jumpTakeOffSpeed = 7;
-
-        /// <summary>
         /// Used to indicated desired direction of travel.
         /// </summary>
         public Vector2 move;
-
-        /// <summary>
-        /// Set to true to initiate a jump.
-        /// </summary>
-        public bool jump;
-
-        /// <summary>
-        /// Set to true to set the current jump velocity to zero.
-        /// </summary>
-        public bool stopJump;
 
         private SpriteRenderer spriteRenderer;
         private Animator animator;
@@ -43,14 +33,29 @@ namespace Platformer.Mechanics
         private static readonly int Grounded = Animator.StringToHash("grounded");
         private static readonly int VelocityX = Animator.StringToHash("velocityX");
 
+        /// <summary>
+        /// Set to true to initiate a jump.
+        /// </summary>
+        private bool jump = default;
+        /// <summary>
+        /// Set to true to set the current jump velocity to zero.
+        /// </summary>
+        private bool stopJump = default;
+
         protected virtual void Awake()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            animator = GetComponent<Animator>();
+            TryInjectDefaultReferences();
+        }
+
+        private void TryInjectDefaultReferences()
+        {
+            spriteRenderer ??= GetComponent<SpriteRenderer>();
+            animator ??= GetComponent<Animator>();
         }
 
         protected override void ComputeVelocity()
         {
+            // state control
             if (jump && IsGrounded)
             {
                 velocity.y = jumpTakeOffSpeed * model.jumpModifier;
@@ -65,15 +70,21 @@ namespace Platformer.Mechanics
                 }
             }
 
+            // graphics
             if (move.x > 0.01f)
                 spriteRenderer.flipX = false;
             else if (move.x < -0.01f)
                 spriteRenderer.flipX = true;
 
-            animator.SetBool(Grounded, IsGrounded);
-            animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / maxSpeed);
+            UpdateAnimatorParameters();
 
             targetVelocity = move * maxSpeed;
+        }
+
+        private void UpdateAnimatorParameters()
+        {
+            animator.SetBool(Grounded, IsGrounded);
+            animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / maxSpeed);
         }
     }
 }

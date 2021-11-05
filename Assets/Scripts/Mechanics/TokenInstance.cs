@@ -68,7 +68,10 @@ namespace Platformer.Mechanics
         }
         
         #if UNITY_EDITOR
-        [ContextMenu("Grab reference")]
+        /// <summary>
+        /// Token instance wasn't a prefab and there's a 100 tokens meaning either a 100 reference sets or this
+        /// </summary>
+        [ContextMenu("Grab audio container reference")]
         private void Grab()
         {
             audioContainer = GetComponent<AudioContainer>();

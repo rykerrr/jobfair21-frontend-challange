@@ -20,7 +20,6 @@ namespace Platformer.Mechanics
         [SerializeField] private PatrolPath path = default;
         
         public AudioContainer AudioContainer => audioContainer;
-        public SpriteRenderer SpriteRenderer => spriteRenderer;
         public AnimationController AnimController => animController;
         public Collider2D Collider2d => collider2d;
         public AudioSource AudioSource => audioSource;
@@ -43,8 +42,13 @@ namespace Platformer.Mechanics
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            var player = collision.gameObject.GetComponent<PlayerController>();
-            
+            ProcessCollision(collision.gameObject);
+        }
+
+        private void ProcessCollision(GameObject other)
+        {
+            var player = other.GetComponent<PlayerController>();
+
             if (player != null)
             {
                 var ev = Schedule<PlayerEnemyCollision>();

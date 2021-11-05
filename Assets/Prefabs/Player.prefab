@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8509783501685719824}
   - component: {fileID: 1824045667}
   - component: {fileID: 114230831923080080}
+  - component: {fileID: 1797397224606407994}
   - component: {fileID: 6082575806313374961}
   - component: {fileID: 8554420211607976620}
   m_Layer: 13
@@ -271,10 +272,23 @@ MonoBehaviour:
   collider2d: {fileID: 1824045667}
   audioSource: {fileID: 8509783501685719824}
   animator: {fileID: 95391780594314510}
+  inputProcessor: {fileID: 1797397224606407994}
+  jumpState: 0
   maxSpeed: 3
   jumpTakeOffSpeed: 7
   controlEnabled: 1
-  jumpState: 0
+--- !u!114 &1797397224606407994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208144871472054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83affc61d4d74aad98cbdeb433cf5391, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6082575806313374961
 MonoBehaviour:
   m_ObjectHideFlags: 0
