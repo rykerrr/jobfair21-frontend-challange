@@ -278,6 +278,12 @@ MonoBehaviour:
   audioSource: {fileID: 5843668731025413174}
   audioContainer: {fileID: 71473244659070932}
   path: {fileID: 0}
+  mover:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }
 --- !u!114 &71473244659070932
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,22 +10,24 @@ namespace Platformer.Mechanics
     [RequireComponent(typeof(AnimationController), typeof(Collider2D))]
     public class EnemyController : MonoBehaviour
     {
-        [Header("References, default will be loaded from GameObject if null")]
-        [SerializeField] private SpriteRenderer spriteRenderer = default;
+        [Header("References, default will be loaded from GameObject if null")] [SerializeField]
+        private SpriteRenderer spriteRenderer = default;
         [SerializeField] private AnimationController animController = default;
         [SerializeField] private Collider2D collider2d = default;
         [SerializeField] private AudioSource audioSource = default;
         [SerializeField] private AudioContainer audioContainer = default;
         [SerializeField] private PatrolPath path = default;
-        
+
         public AudioContainer AudioContainer => audioContainer;
         public AnimationController AnimController => animController;
         public Collider2D Collider2d => collider2d;
         public AudioSource AudioSource => audioSource;
 
         private ICollisionProcessor collisionProcessor;
-        private PatrolPath.Mover mover;
         
+        [Header("Displayed for debugging")]
+        [SerializeReference] private PatrolPath.Mover mover;
+
         private void Awake()
         {
             TryInjectDefaultReferences();
@@ -34,14 +36,14 @@ namespace Platformer.Mechanics
         private void TryInjectDefaultReferences()
         {
             collisionProcessor = GetComponent<ICollisionProcessor>();
-            
+
             animController ??= GetComponent<AnimationController>();
             collider2d ??= GetComponent<Collider2D>();
             audioSource ??= GetComponent<AudioSource>();
             spriteRenderer ??= GetComponent<SpriteRenderer>();
             audioContainer ??= GetComponent<AudioContainer>();
         }
-        
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             collisionProcessor.ProcessCollision(collision.gameObject);
@@ -53,9 +55,28 @@ namespace Platformer.Mechanics
             {
                 mover ??= path.CreateMover(animController.maxSpeed * 0.5f);
 
-                animController.move.x = Mathf.Clamp(mover.Position.x - transform.position.x, -1, 1);
+                UpdateMoveVectorViaMover();
             }
         }
 
+        private void UpdateMoveVectorViaMover()
+        {
+            var newMoveHorizontal = Mathf.Clamp(mover.Position.x - transform.position.x
+                , -1, 1);
+            
+            animController.move.x = newMoveHorizontal;
+        }
+        
+        #region editor methods
+        #if UNITY_EDITOR
+        [ContextMenu("Reset mover to state it would be if it were instantiated normally")]
+        public void ResetMover()
+        {
+            if (!path) return;
+            
+            mover = path.CreateMover(animController.maxSpeed * 0.5f);
+        }
+        #endif
+        #endregion
     }
 }
