@@ -12,6 +12,10 @@ namespace Platformer.JobFair.Mechanics
         [Header("References")] 
         [SerializeField] private Transform firePoint = default;
         [SerializeField] private ArrowProjectile arrowPrefab = default;
+        
+        // Audio
+        [SerializeField] private AudioSource audioSource = default;
+        [SerializeField] private AudioContainer audioContainer = default;
         #endregion
         
         private ITimer timer;
@@ -50,6 +54,9 @@ namespace Platformer.JobFair.Mechanics
         /// </summary>
         private void CreateAndInitArrow()
         {
+            var hasWhoosh = audioContainer.TryGetClip("crossbow_arrow_whoosh", out var whooshClip);
+            if(hasWhoosh) audioSource.PlayOneShot(whooshClip);
+            
             var arrowClone = Instantiate(arrowPrefab, firePoint.position, Quaternion.identity);
 
             arrowClone.Init(firePoint.right);
