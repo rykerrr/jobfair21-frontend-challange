@@ -38,11 +38,11 @@ namespace Platformer.Mechanics
             //if tokens are not empty, they've been added at editor time.
             if (tokens.Count == 0)
                 ResetTokensAndFindAllTokensInScene();
+            
             //Register all tokens so they can work with this controller.
             for (var i = 0; i < tokens.Count; i++)
             {
-                tokens[i].tokenIndex = i;
-                tokens[i].controller = this;
+                tokens[i].InitToken(this, i);
             }
         }
 

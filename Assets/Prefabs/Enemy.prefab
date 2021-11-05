@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2651140156555518892}
   - component: {fileID: 772289407653213039}
   - component: {fileID: 71473244659070932}
+  - component: {fileID: 8464339453375949423}
   m_Layer: 13
   m_Name: Enemy
   m_TagString: Player
@@ -256,11 +257,9 @@ MonoBehaviour:
   minGroundNormalY: 0.65
   gravityModifier: 1
   velocity: {x: 0, y: 0}
-  maxSpeed: 7
   jumpTakeOffSpeed: 7
+  maxSpeed: 7
   move: {x: 0, y: 0}
-  jump: 0
-  stopJump: 0
 --- !u!114 &772289407653213039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,3 +292,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: b7f741588644cd64bbee6387cb54a96d, type: 3}
+--- !u!114 &8464339453375949423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661912868639658944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc3bee8cf9be4fe1a5ee0bad5579e1d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyController: {fileID: 772289407653213039}
