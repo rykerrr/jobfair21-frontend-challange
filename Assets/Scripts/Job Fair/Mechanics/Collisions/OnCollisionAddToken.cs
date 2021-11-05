@@ -28,6 +28,7 @@ namespace Platformer.JobFair.Mechanics.Collisions
             ev.player = player;
         }
         
+        #region editor methods
 #if UNITY_EDITOR
         /// <summary>
         /// Same problem as with token instance...token instance wasn't a prefab and there's a 100 tokens
@@ -39,5 +40,6 @@ namespace Platformer.JobFair.Mechanics.Collisions
             tokenInstance = GetComponent<TokenInstance>();
         }
 #endif
+        #endregion
     }
 }

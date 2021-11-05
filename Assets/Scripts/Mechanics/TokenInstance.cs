@@ -69,6 +69,7 @@ namespace Platformer.Mechanics
             collisionProcessor.ProcessCollision(other.gameObject);
         }
 
+        #region editor methods
 #if UNITY_EDITOR
         /// <summary>
         /// Token instance wasn't a prefab and there's a 100 tokens meaning either a 100 reference sets or this
@@ -79,5 +80,6 @@ namespace Platformer.Mechanics
             audioContainer = GetComponent<AudioContainer>();
         }
 #endif
+        #endregion
     }
 }

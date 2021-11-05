@@ -94,6 +94,7 @@ namespace Platformer.JobFair.Mechanics
             state = GateState.Closed;
         }
 
+        #region editor methods
 #if UNITY_EDITOR
         [ContextMenu("Set ClosedHeight to pivot scale y")]
         public void ResetClosedHeightToScale() => closedHeight = gatePivot.localScale.y;
@@ -104,6 +105,7 @@ namespace Platformer.JobFair.Mechanics
         [ContextMenu("Text Close")]
         public void TestClose() => CloseGate();
 #endif
+        #endregion
 
         private enum GateState
         {

@@ -42,7 +42,6 @@ namespace Platformer.Mechanics
         protected const float minMoveDistance = 0.001f;
         protected const float shellRadius = 0.01f;
 
-
         /// <summary>
         /// Bounce the object's vertical velocity.
         /// </summary>

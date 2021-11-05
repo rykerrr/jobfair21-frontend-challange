@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3822022361050711339}
   - component: {fileID: 3822022361050711338}
   - component: {fileID: 3822022361050711337}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: OnEnter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   traps:
+  - {fileID: 0}
   - {fileID: 0}
 --- !u!61 &3822022361050711337
 BoxCollider2D:

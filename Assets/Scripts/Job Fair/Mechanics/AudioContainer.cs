@@ -40,7 +40,8 @@ namespace Platformer.JobFair.Mechanics
             return false;
         }
         
-        #if UNITY_EDITOR
+        #region editor methods
+#if UNITY_EDITOR
         [ContextMenu("Log Dictionary")]
         public void LogDictionaryKVPs()
         {
@@ -53,6 +54,7 @@ namespace Platformer.JobFair.Mechanics
             
             Debug.Log(sb.ToString());
         }
-        #endif
+#endif
+        #endregion
     }
 }
