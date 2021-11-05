@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using Platformer.Gameplay;
-using static Platformer.Core.Simulation;
 using Platformer.Model;
 using Platformer.Core;
 using Platformer.JobFair.Mechanics;
+using Platformer.JobFair.InputProcessing;
+using static Platformer.Core.Simulation;
+using ButtonState = Platformer.JobFair.InputProcessing.ButtonInputProcessor.ButtonState;
 
 namespace Platformer.Mechanics
 {
@@ -19,14 +21,18 @@ namespace Platformer.Mechanics
         [SerializeField] private Collider2D collider2d;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private Animator animator;
-
+        [SerializeField] private ButtonInputProcessor inputProcessor;
+        
         public AudioContainer AudioContainer => audioContainer;
         public Health Health => health;
         public AudioSource AudioSource => audioSource;
         public Collider2D Collider2d => collider2d;
         public Animator Animator => animator;
 
-
+        /// <summary>
+        /// Current state of the jump
+        /// </summary>
+        public JumpState jumpState = JumpState.Grounded;
         /// <summary>
         /// Max horizontal speed of the player.
         /// </summary>
@@ -39,13 +45,12 @@ namespace Platformer.Mechanics
 
         public bool controlEnabled = true;
 
-        private readonly PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+        private readonly PlatformerModel gameModelProperties = Simulation.GetModel<PlatformerModel>();
 
         private static readonly int Grounded = Animator.StringToHash("grounded");
         private static readonly int VelocityX = Animator.StringToHash("velocityX");
 
         private SpriteRenderer spriteRenderer;
-        public JumpState jumpState = JumpState.Grounded;
         private Vector2 move;
         private bool stopJump;
         private bool jump;
@@ -55,6 +60,10 @@ namespace Platformer.Mechanics
             TryInjectDefaultReferences();
         }
 
+        /// <summary>
+        /// Pretty much dependency injection, a framework to do this could be nice to separate the reference Injection
+        /// responsibility to another class
+        /// </summary>
         private void TryInjectDefaultReferences()
         {
             health ??= GetComponent<Health>();
@@ -63,61 +72,99 @@ namespace Platformer.Mechanics
             spriteRenderer ??= GetComponent<SpriteRenderer>();
             animator ??= GetComponent<Animator>();
             audioContainer ??= GetComponent<AudioContainer>();
+            inputProcessor ??= GetComponent<ButtonInputProcessor>();
         }
 
         protected override void Update()
         {
             if (controlEnabled)
             {
-                // Input
-                move.x = Input.GetAxis("Horizontal");
-                if (jumpState == JumpState.Grounded && Input.GetButtonDown("Jump"))
-                    jumpState = JumpState.PrepareToJump;
-                else if (Input.GetButtonUp("Jump"))
-                {
-                    stopJump = true;
-                    Schedule<PlayerStopJump>().player = this;
-                }
+                move.x = inputProcessor.GetAxis("Horizontal");
+                var jumpButtonState = inputProcessor.GetButtonState("jump");
+
+                ProcessJumping(jumpButtonState);
             }
             else
             {
                 move.x = 0;
             }
             
-            // State control 
             UpdateJumpState();
             
             base.Update();
+        }
+
+        private void ProcessJumping(ButtonState jumpButtonState)
+        {
+            switch (jumpButtonState)
+            {
+                case ButtonState.PressedThisFrame:
+                {
+                    if (jumpState != JumpState.Grounded) break;
+
+                    PrepareJump();
+
+                    break;
+                }
+                case ButtonState.ReleasedThisFrame:
+                {
+                    StopJump();
+
+                    break;
+                }
+            }
+        }
+
+        private void PrepareJump()
+        {
+            jumpState = JumpState.PrepareToJump;
+        }
+
+        private void StopJump()
+        {
+            stopJump = true;
+            Schedule<PlayerStopJump>().player = this;
         }
 
         private void UpdateJumpState()
         {
             // State control
             jump = false;
+            
             switch (jumpState)
             {
                 case JumpState.PrepareToJump:
+                {
                     jumpState = JumpState.Jumping;
                     jump = true;
                     stopJump = false;
                     break;
+                }
                 case JumpState.Jumping:
+                {
                     if (!IsGrounded)
                     {
                         Schedule<PlayerJumped>().player = this;
                         jumpState = JumpState.InFlight;
                     }
+
                     break;
+                }
                 case JumpState.InFlight:
+                {
                     if (IsGrounded)
                     {
                         Schedule<PlayerLanded>().player = this;
                         jumpState = JumpState.Landed;
                     }
+
                     break;
+                }
                 case JumpState.Landed:
+                {
                     jumpState = JumpState.Grounded;
                     break;
+                }
             }
         }
 
@@ -126,7 +173,7 @@ namespace Platformer.Mechanics
             // State control
             if (jump && IsGrounded)
             {
-                velocity.y = jumpTakeOffSpeed * model.jumpModifier;
+                velocity.y = jumpTakeOffSpeed * gameModelProperties.jumpModifier;
                 jump = false;
             }
             else if (stopJump)
@@ -134,7 +181,7 @@ namespace Platformer.Mechanics
                 stopJump = false;
                 if (velocity.y > 0)
                 {
-                    velocity.y *= model.jumpDeceleration;
+                    velocity.y *= gameModelProperties.jumpDeceleration;
                 }
             }
 

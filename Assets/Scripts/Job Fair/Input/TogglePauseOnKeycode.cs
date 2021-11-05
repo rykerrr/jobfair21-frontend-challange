@@ -1,7 +1,7 @@
 using Platformer.JobFair.Controllers;
 using UnityEngine;
 
-namespace Platformer
+namespace Platformer.JobFair.InputProcessing
 {
     public class TogglePauseOnKeycode : MonoBehaviour
     {
