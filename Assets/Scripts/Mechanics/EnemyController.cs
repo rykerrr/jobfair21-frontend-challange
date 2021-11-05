@@ -33,7 +33,6 @@ namespace Platformer.Mechanics
             TryInjectDefaultReferences();
         }
 
-
         private void TryInjectDefaultReferences()
         {
             collisionProcessor = GetComponent<ICollisionProcessor>();

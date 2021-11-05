@@ -8,11 +8,6 @@ namespace Platformer.JobFair.Mechanics.Collisions
     public class OnCollisionSchedulePlayerEnemyCollision : MonoBehaviour, ICollisionProcessor
     {
         [SerializeField] private EnemyController enemyController = default;
-
-        public void SetEnemyController(EnemyController enemyController)
-        {
-            this.enemyController = enemyController;
-        }
         
         public void ProcessCollision(GameObject other)
         {

@@ -8,11 +8,6 @@ namespace Platformer.JobFair.Mechanics.Collisions
     public class OnCollisionAddToken : MonoBehaviour, ICollisionProcessor
     {
         [SerializeField] private TokenInstance tokenInstance;
-
-        public void SetTokenInstance(TokenInstance tokenInstance)
-        {
-            this.tokenInstance = tokenInstance;
-        }
         
         public void ProcessCollision(GameObject other)
         {
