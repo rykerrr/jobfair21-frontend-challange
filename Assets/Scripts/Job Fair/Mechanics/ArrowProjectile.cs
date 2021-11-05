@@ -5,12 +5,14 @@ namespace Platformer.JobFair.Mechanics
 {
     public class ArrowProjectile : MonoBehaviour
     {
+        #region fields
         [Header("Preferences")] 
         [SerializeField] private float speed = 20f;
 
         [Header("References")] 
         [SerializeField] private Rigidbody2D thisRb = default;
         [SerializeField] private SpriteRenderer spriteRenderer = default;
+        #endregion
         
         private ICollisionProcessor playerHitCollisionProcessor;
 

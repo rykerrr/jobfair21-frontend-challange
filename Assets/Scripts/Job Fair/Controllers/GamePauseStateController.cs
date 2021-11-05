@@ -5,6 +5,8 @@ namespace Platformer.JobFair.Controllers
 {
     /// <summary>
     /// This component is used to control the game pause state
+    /// No need to turn it into a singleton although only one should exist per scene
+    /// As this is part of the UI, multi-scene workflow may be a perfect fit
     /// </summary>
     public class GamePauseStateController : MonoBehaviour
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Platformer.JobFair.Mechanics.Traps
 {
     /// <summary>
+    /// Fires an arrow from a given ArrowTurret ONCE 
     /// Minecraft's dispenser can be used as a reference point for this Idea
     /// </summary>
     public class SingleUseArrowTrap : Trap

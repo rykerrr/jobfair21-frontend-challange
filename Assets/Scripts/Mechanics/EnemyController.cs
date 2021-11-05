@@ -1,8 +1,6 @@
-﻿using Platformer.Gameplay;
-using Platformer.JobFair.Mechanics;
+﻿using Platformer.JobFair.Mechanics;
 using Platformer.JobFair.Mechanics.Collisions;
 using UnityEngine;
-using static Platformer.Core.Simulation;
 
 namespace Platformer.Mechanics
 {

@@ -16,7 +16,7 @@ namespace Platformer.JobFair.Debugging
             var db = GameDatabase.Instance;
             var user = db.CurrentUser;
             
-            UnityEngine.Debug.Log($"Name: {user.Username} Enemies Killed: {user.EnemiesKilled} Tokens: {user.Tokens} Score: {user.Score}");
+            Debug.Log($"Name: {user.Username} Enemies Killed: {user.EnemiesKilled} Tokens: {user.Tokens} Score: {user.Score}");
         }
         
         #endif

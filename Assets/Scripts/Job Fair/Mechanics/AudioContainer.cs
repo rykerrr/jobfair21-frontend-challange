@@ -4,6 +4,9 @@ using StringBuilder = System.Text.StringBuilder;
 
 namespace Platformer.JobFair.Mechanics
 {
+    /// <summary>
+    /// Contains audio clips and allows lookup of them using TryGetClip
+    /// </summary>
     public class AudioContainer : MonoBehaviour
     {
         [SerializeField] private List<AudioClip> clips = new List<AudioClip>();

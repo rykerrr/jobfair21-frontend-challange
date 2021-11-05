@@ -5,15 +5,20 @@ namespace Platformer.JobFair.Mechanics
 {
     public class ArrowTurret : MonoBehaviour
     {
+        #region fields
         [Header("Preferences")]
         [SerializeField] private float delayPerFire;
 
         [Header("References")] 
         [SerializeField] private Transform firePoint = default;
         [SerializeField] private ArrowProjectile arrowPrefab = default;
+        #endregion
         
         private ITimer timer;
 
+        /// <summary>
+        /// Returns whether the turret can fire or not, this is set by a timer
+        /// </summary>
         public bool CanFire { get; private set; } = true;
         
         private void Awake()

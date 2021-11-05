@@ -2,15 +2,12 @@
 
 namespace Platformer.JobFair.InputProcessing
 {
+    /// <summary>
+    /// May be replaced in favor of new input system, currently just acts as a delegation responsible
+    /// solely for input
+    /// </summary>
     public class ButtonInputProcessor : MonoBehaviour
     {
-        public enum ButtonState
-        {
-            PressedThisFrame,
-            Pressed,
-            ReleasedThisFrame
-        }
-
         public ButtonState GetButtonState(string button)
         {
             if (Input.GetButtonDown(button))
@@ -27,6 +24,13 @@ namespace Platformer.JobFair.InputProcessing
         public float GetAxis(string axis)
         {
             return Input.GetAxis(axis);
+        }
+        
+        public enum ButtonState
+        {
+            PressedThisFrame,
+            Pressed,
+            ReleasedThisFrame
         }
     }
 }

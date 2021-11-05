@@ -3,10 +3,15 @@ using UnityEngine;
 
 namespace Platformer.JobFair.InputProcessing
 {
+    /// <summary>
+    /// Toggles the pause menu to prevent requirement of pressing a button (on PC)
+    /// </summary>
     public class TogglePauseOnKeycode : MonoBehaviour
     {
+        #region fields
         [SerializeField] private KeyCode toggleKeycode = KeyCode.Escape;
         [SerializeField] private GamePauseStateController pauseStateController = default;
+        #endregion
         
         private bool pause;
         
