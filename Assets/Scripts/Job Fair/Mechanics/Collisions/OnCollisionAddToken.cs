@@ -1,14 +1,23 @@
-﻿using Platformer.Mechanics;
+﻿using System;
+using Platformer.Mechanics;
 using UnityEngine;
 using Platformer.Gameplay;
+using Platformer.JobFair.Destruction;
 using static Platformer.Core.Simulation;
 
 namespace Platformer.JobFair.Mechanics.Collisions
 {
     public class OnCollisionAddToken : MonoBehaviour, ICollisionProcessor
     {
-        [SerializeField] private TokenInstance tokenInstance;
-        
+        private TokenInstance tokenInstance;
+
+        public event Action onCollisionSuccess;
+
+        private void Awake()
+        {
+            tokenInstance = GetComponent<TokenInstance>();
+        }
+
         public void ProcessCollision(GameObject other)
         {
             var player = other.gameObject.GetComponent<PlayerController>();
@@ -16,9 +25,8 @@ namespace Platformer.JobFair.Mechanics.Collisions
             if (tokenInstance.Collected) return;
             
             //disable the gameObject and remove it from the controller update list.
-            tokenInstance.frame = 0;
-            tokenInstance.sprites = tokenInstance.collectedAnimation;
-            
+            tokenInstance.GetComponent<IDestructionProcessor>().Destroy();
+
             if (tokenInstance.TokenController != null)
                 tokenInstance.Collected = true;
             
@@ -26,20 +34,8 @@ namespace Platformer.JobFair.Mechanics.Collisions
             var ev = Schedule<PlayerTokenCollision>();
             ev.token = tokenInstance;
             ev.player = player;
+            
+            onCollisionSuccess?.Invoke();
         }
-        
-        #region editor methods
-#if UNITY_EDITOR
-        /// <summary>
-        /// Same problem as with token instance...token instance wasn't a prefab and there's a 100 tokens
-        /// meaning either a 100 reference sets or this
-        /// </summary>
-        [ContextMenu("Grab token instance reference")]
-        private void Grab()
-        {
-            tokenInstance = GetComponent<TokenInstance>();
-        }
-#endif
-        #endregion
     }
 }

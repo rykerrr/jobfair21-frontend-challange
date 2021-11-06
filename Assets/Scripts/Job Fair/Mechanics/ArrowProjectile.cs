@@ -1,4 +1,5 @@
-﻿using Platformer.JobFair.Mechanics.Collisions;
+﻿using Platformer.JobFair.Destruction;
+using Platformer.JobFair.Mechanics.Collisions;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics

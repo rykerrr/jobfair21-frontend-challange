@@ -1,5 +1,6 @@
 using System;
 using Platformer.Core;
+using Platformer.JobFair.Mechanics;
 using Platformer.Model;
 using UnityEngine;
 
@@ -20,6 +21,13 @@ namespace Platformer.Mechanics
         //shared reference when the scene loads, allowing the model to be
         //conveniently configured inside the inspector.
         public PlatformerModel model = Simulation.GetModel<PlatformerModel>();
+
+        public IProjectileCreationHandler creationHandler { get; private set; }
+
+        private void Awake()
+        {
+            creationHandler = GetComponent<IProjectileCreationHandler>();
+        }
 
         private void OnEnable()
         {

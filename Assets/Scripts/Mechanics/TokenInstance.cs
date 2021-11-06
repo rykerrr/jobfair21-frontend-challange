@@ -51,6 +51,7 @@ namespace Platformer.Mechanics
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
             collisionProcessor = GetComponent<ICollisionProcessor>();
+            audioContainer = GetComponent<AudioContainer>();
             
             if (randomAnimationStartTime)
                 frame = Random.Range(0, sprites.Length);
@@ -68,18 +69,5 @@ namespace Platformer.Mechanics
         {
             collisionProcessor.ProcessCollision(other.gameObject);
         }
-
-        #region editor methods
-#if UNITY_EDITOR
-        /// <summary>
-        /// Token instance wasn't a prefab and there's a 100 tokens meaning either a 100 reference sets or this
-        /// </summary>
-        [ContextMenu("Grab audio container reference")]
-        private void Grab()
-        {
-            audioContainer = GetComponent<AudioContainer>();
-        }
-#endif
-        #endregion
     }
 }

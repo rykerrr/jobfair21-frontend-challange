@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 772289407653213039}
   - component: {fileID: 71473244659070932}
   - component: {fileID: 8464339453375949423}
+  - component: {fileID: 3658594567289035163}
   m_Layer: 13
   m_Name: Enemy
   m_TagString: Player
@@ -311,3 +312,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyController: {fileID: 772289407653213039}
+--- !u!114 &3658594567289035163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661912868639658944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56e37c6d8e5f7164ab8a574572e430e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behavioursToDisable:
+  - {fileID: 2651140156555518892}
+  - {fileID: 1724124757368974630}

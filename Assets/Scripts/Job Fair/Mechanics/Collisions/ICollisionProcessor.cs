@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics.Collisions
 {
@@ -9,6 +10,8 @@ namespace Platformer.JobFair.Mechanics.Collisions
     /// </summary>
     public interface ICollisionProcessor
     {
-        public void ProcessCollision(GameObject other);
+        event Action onCollisionSuccess;
+        
+        void ProcessCollision(GameObject other);
     }
 }

@@ -186,15 +186,20 @@ namespace Platformer.Mechanics
             }
 
             // Graphics
-            if (move.x > 0.01f)
-                spriteRenderer.flipX = false;
-            else if (move.x < -0.01f)
-                spriteRenderer.flipX = true;
+            UpdateSpriteRendererFlip();
 
             UpdateAnimatorParameters();
 
             // State control
             targetVelocity = move * maxSpeed;
+        }
+
+        private void UpdateSpriteRendererFlip()
+        {
+            if (move.x > 0.01f)
+                spriteRenderer.flipX = false;
+            else if (move.x < -0.01f)
+                spriteRenderer.flipX = true;
         }
 
         private void UpdateAnimatorParameters()

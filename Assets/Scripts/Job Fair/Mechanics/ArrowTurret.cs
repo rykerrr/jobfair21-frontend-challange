@@ -1,7 +1,8 @@
 using Platformer.Core;
-using Platformer.Job_Fair.Gameplay;
 using Platformer.JobFair.Utility.Timers;
+using Platformer.JobFair.Gameplay;
 using UnityEngine;
+
 
 namespace Platformer.JobFair.Mechanics
 {

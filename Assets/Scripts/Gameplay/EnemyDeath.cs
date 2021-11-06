@@ -1,4 +1,5 @@
 using Platformer.Core;
+using Platformer.JobFair.Destruction;
 using Platformer.Mechanics;
 
 namespace Platformer.Gameplay
@@ -13,8 +14,7 @@ namespace Platformer.Gameplay
 
         public override void Execute()
         {
-            enemy.Collider2d.enabled = false;
-            enemy.AnimController.enabled = false;
+            enemy.GetComponent<IDestructionProcessor>().Destroy();
 
             var hasDeathAudio = enemy.AudioContainer.TryGetClip("LandOnEnemy", out var deathAudio);
             
