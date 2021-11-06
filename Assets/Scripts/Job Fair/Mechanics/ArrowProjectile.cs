@@ -1,9 +1,11 @@
-﻿using Platformer.JobFair.Destruction;
-using Platformer.JobFair.Mechanics.Collisions;
+﻿using Platformer.JobFair.Mechanics.Collisions;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics
 {
+    /// <summary>
+    /// Simple Implementation of a velocity-based arrow projectile
+    /// </summary>
     public class ArrowProjectile : MonoBehaviour
     {
         #region fields

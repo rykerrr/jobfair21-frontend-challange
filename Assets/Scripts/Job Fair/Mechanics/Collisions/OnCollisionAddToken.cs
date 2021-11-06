@@ -7,6 +7,9 @@ using static Platformer.Core.Simulation;
 
 namespace Platformer.JobFair.Mechanics.Collisions
 {
+    /// <summary>
+    /// Token removal logic delegated to an ICollisionProcessor from TokenInstance
+    /// </summary>
     public class OnCollisionAddToken : MonoBehaviour, ICollisionProcessor
     {
         private TokenInstance tokenInstance;
@@ -24,6 +27,7 @@ namespace Platformer.JobFair.Mechanics.Collisions
             if (player == null) return;
             if (tokenInstance.Collected) return;
             
+            // Delegated logic for:
             //disable the gameObject and remove it from the controller update list.
             tokenInstance.GetComponent<IDestructionProcessor>().Destroy();
 

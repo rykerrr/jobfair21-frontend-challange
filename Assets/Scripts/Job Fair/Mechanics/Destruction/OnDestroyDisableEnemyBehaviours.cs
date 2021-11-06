@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Platformer
 {
+    /// <summary>
+    /// Delegation of enemy's removal logic
+    /// </summary>
     public class OnDestroyDisableEnemyBehaviours : MonoBehaviour, IDestructionProcessor
     {
         [SerializeField] private List<Behaviour> behavioursToDisable = default;

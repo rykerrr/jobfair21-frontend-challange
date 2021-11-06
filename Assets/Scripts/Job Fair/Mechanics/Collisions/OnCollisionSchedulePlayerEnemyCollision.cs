@@ -6,6 +6,9 @@ using static Platformer.Core.Simulation;
 
 namespace Platformer.JobFair.Mechanics.Collisions
 {
+    /// <summary>
+    /// Delegation of enemy collision logic to an ICollisionProcessor
+    /// </summary>
     public class OnCollisionSchedulePlayerEnemyCollision : MonoBehaviour, ICollisionProcessor
     {
         [SerializeField] private EnemyController enemyController = default;

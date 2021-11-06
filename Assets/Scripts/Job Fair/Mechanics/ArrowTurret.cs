@@ -3,9 +3,12 @@ using Platformer.JobFair.Utility.Timers;
 using Platformer.JobFair.Gameplay;
 using UnityEngine;
 
-
 namespace Platformer.JobFair.Mechanics
 {
+    /// <summary>
+    /// Entity with the responsibility of firing an arrow
+    /// Mostly based on the Idea of minecraft's dispensers
+    /// </summary>
     public class ArrowTurret : MonoBehaviour
     {
         #region fields

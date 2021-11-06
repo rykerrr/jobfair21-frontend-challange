@@ -1,12 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Platformer.JobFair.Destruction;
 using Platformer.Mechanics;
 using UnityEngine;
 
 namespace Platformer
 {
+    /// <summary>
+    /// Delegation of token's removal logic
+    /// </summary>
     public class OnDestroyDisableToken : MonoBehaviour, IDestructionProcessor
     {
         private TokenInstance tokenInstance;

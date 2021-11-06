@@ -7,6 +7,9 @@ using static Platformer.Core.Simulation;
 
 namespace Platformer.JobFair.Mechanics.Collisions
 {
+    /// <summary>
+    /// Arrow collision logic delegated to an ICollisionProcessor
+    /// </summary>
     public class OnCollisionKillPlayer : MonoBehaviour, ICollisionProcessor
     {
         public event Action onCollisionSuccess;
