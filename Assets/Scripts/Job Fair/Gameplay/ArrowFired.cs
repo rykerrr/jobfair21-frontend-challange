@@ -23,10 +23,10 @@ namespace Platformer.JobFair.Gameplay
 
             // this delegation projectile creation logic is what would allow to make this event generalized
             // for ProjectileFired instead of simply ArrowFired
-            var arrowClone = GameController.Instance.creationHandler.CreateProjectile(
+            var arrowClone = GameController.Instance.ProjectileManager.CreateProjectile(
                 turret.ArrowPrefab.gameObject, turret.FirePoint.position, Quaternion.identity);
 
-            arrowClone.GetComponent<ArrowProjectile>().Init(turret.FirePoint.right);
+            arrowClone.GetComponent<ArrowProjectile>().Init(turret.FirePoint.right, turret.gameObject);
         }
     }
 }

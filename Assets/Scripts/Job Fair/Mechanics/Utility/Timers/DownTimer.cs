@@ -39,7 +39,7 @@ namespace Platformer.JobFair.Utility.Timers
         {
             if (time <= 0) return false;
             
-            time = Mathf.Clamp(time - deltaTime, defaultTime, 0f);
+            time = Mathf.Clamp(time - deltaTime, 0f, defaultTime);
 
             if (time - Mathf.Epsilon <= 0) OnTimerEnd?.Invoke();
 

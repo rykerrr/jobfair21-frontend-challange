@@ -22,11 +22,11 @@ namespace Platformer.Mechanics
         //conveniently configured inside the inspector.
         public PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
-        public IProjectileCreationHandler creationHandler { get; private set; }
+        public IProjectileManager ProjectileManager { get; private set; }
 
         private void Awake()
         {
-            creationHandler = GetComponent<IProjectileCreationHandler>();
+            ProjectileManager = GetComponent<IProjectileManager>();
         }
 
         private void OnEnable()

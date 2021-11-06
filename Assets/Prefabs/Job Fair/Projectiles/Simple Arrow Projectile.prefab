@@ -340,8 +340,9 @@ GameObject:
   - component: {fileID: 4877172364945618872}
   - component: {fileID: 4877172364945619014}
   - component: {fileID: 4877172364945618873}
-  - component: {fileID: 7531994743089120701}
+  - component: {fileID: 3916982532640744126}
   - component: {fileID: 2634949072350835192}
+  - component: {fileID: 1084947920462103155}
   m_Layer: 0
   m_Name: Simple Arrow Projectile
   m_TagString: Untagged
@@ -399,10 +400,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516201a98e7744a78d33c4224dd07168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
   speed: 160
   thisRb: {fileID: 4877172364945619014}
   spriteRenderer: {fileID: 0}
---- !u!114 &7531994743089120701
+--- !u!114 &3916982532640744126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -411,9 +413,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4877172364945618875}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 788af32db03ac1748a76ed09aff08354, type: 3}
+  m_Script: {fileID: 11500000, guid: af632061e19bc094c902b2e440b0a69c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabKey: {fileID: 0}
+  owner: {fileID: 4877172364945618873}
 --- !u!114 &2634949072350835192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,6 +430,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82a8bab6abbb4279ba04f3508f00769e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1084947920462103155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4877172364945618875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d5472fe273f1d459f4b07407ab5f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifetime: 3
 --- !u!1001 &9024530150016055817
 PrefabInstance:
   m_ObjectHideFlags: 0

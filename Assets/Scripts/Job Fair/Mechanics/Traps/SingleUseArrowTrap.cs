@@ -20,8 +20,8 @@ namespace Platformer.JobFair.Mechanics.Traps
         /// </summary>
         private void TryFireArrow()
         {
-            if (alreadyFired || !arrowTurret.CanFire) return;
-            alreadyFired = true;
+            // if (alreadyFired || !arrowTurret.CanFire) return;
+            // alreadyFired = true;
             
             arrowTurret.Fire();
         }

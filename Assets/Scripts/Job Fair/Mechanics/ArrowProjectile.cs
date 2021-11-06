@@ -15,7 +15,12 @@ namespace Platformer.JobFair.Mechanics
         [Header("References")] 
         [SerializeField] private Rigidbody2D thisRb = default;
         [SerializeField] private SpriteRenderer spriteRenderer = default;
+        
+        [Header("Set by self or injected, shown for debug")]
+        [SerializeField] private GameObject owner = default;
         #endregion
+
+        public GameObject Owner => owner;
         
         private ICollisionProcessor playerHitCollisionProcessor;
 
@@ -24,8 +29,10 @@ namespace Platformer.JobFair.Mechanics
             playerHitCollisionProcessor = GetComponent<ICollisionProcessor>();
         }
 
-        public void Init(Vector2 forwardVector)
+        public void Init(Vector2 forwardVector, GameObject owner)
         {
+            this.owner = owner;
+            
             transform.right = forwardVector;
             
             thisRb.velocity = forwardVector.normalized * speed * Time.fixedDeltaTime;

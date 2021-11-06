@@ -29,7 +29,7 @@ namespace Platformer.JobFair.Mechanics
         public AudioSource AudioSource => audioSource;
         public AudioContainer AudioContainer => audioContainer;
         
-        private ITimer timer;
+        private ITimer firingTimer;
 
         /// <summary>
         /// Returns whether the turret can fire or not, this is set by a timer
@@ -44,13 +44,21 @@ namespace Platformer.JobFair.Mechanics
 
         private void InitTimer()
         {
-            timer = new DownTimer(delayPerFire);
-            timer.OnTimerEnd += () => CanFire = true;
+            firingTimer = new DownTimer(delayPerFire);
+            
+            firingTimer.OnTimerEnd += () =>
+            {
+                // Debug.Log("Can fire set to true!");
+
+                CanFire = true;
+            };
         }
 
         private void Update()
         {
-            timer.TryTick(Time.deltaTime);
+            // Debug.Log($"Ticked through: {firingTimer.TryTick(Time.deltaTime)}, CanFire: {CanFire}");
+
+            firingTimer.TryTick(Time.deltaTime);
         }
         
         public void Fire()
@@ -68,6 +76,8 @@ namespace Platformer.JobFair.Mechanics
         {
             var ev = Simulation.Schedule<ArrowFired>();
             ev.turret = this;
+            
+            firingTimer.Reset();
         }
     }
 }
