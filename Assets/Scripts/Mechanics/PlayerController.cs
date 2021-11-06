@@ -37,7 +37,10 @@ namespace Platformer.Mechanics
         /// Max horizontal speed of the player.
         /// </summary>
         [Header("Preferences")]
-        public float maxSpeed = 7;
+        [SerializeField] private float maxSpeed = 7;
+
+        public float MaxSpeed => maxSpeed;
+        
         /// <summary>
         /// Initial jump velocity at the start of a jump.
         /// </summary>
@@ -54,10 +57,14 @@ namespace Platformer.Mechanics
         private Vector2 move;
         private bool stopJump;
         private bool jump;
-
+        
+        public float curMaxSpeed;
+        
         private void Awake()
         {
             TryInjectDefaultReferences();
+
+            curMaxSpeed = maxSpeed;
         }
 
         /// <summary>
@@ -191,7 +198,7 @@ namespace Platformer.Mechanics
             UpdateAnimatorParameters();
 
             // State control
-            targetVelocity = move * maxSpeed;
+            targetVelocity = move * curMaxSpeed;
         }
 
         private void UpdateSpriteRendererFlip()
@@ -205,7 +212,7 @@ namespace Platformer.Mechanics
         private void UpdateAnimatorParameters()
         {
             animator.SetBool(Grounded, IsGrounded);
-            animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / maxSpeed);
+            animator.SetFloat(VelocityX, Mathf.Abs(velocity.x) / curMaxSpeed);
         }
 
         public enum JumpState

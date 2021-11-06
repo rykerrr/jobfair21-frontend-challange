@@ -17,11 +17,18 @@ public class PlatformerSpeedPad : MonoBehaviour
         player.StartCoroutine(PlayerModifier(player, duration));
     }
 
+    /// <summary>
+    /// Haven't used yet but a bug may happen here which would be the same as UseSpeedPowerup's bug
+    /// due to it being a coroutine (namespace Platformer.JobFair.Gameplay -> UseSpeedPowerup)
+    /// </summary>
+    /// <param name="player"></param>
+    /// <param name="lifetime"></param>
+    /// <returns></returns>
     private IEnumerator PlayerModifier(PlayerController player, float lifetime){
-        var initialSpeed = player.maxSpeed;
-        player.maxSpeed = maxSpeed;
+        var initialSpeed = player.MaxSpeed;
+        player.curMaxSpeed = maxSpeed;
         yield return new WaitForSeconds(lifetime);
-        player.maxSpeed = initialSpeed;
+        player.curMaxSpeed = initialSpeed;
     }
 
 }
