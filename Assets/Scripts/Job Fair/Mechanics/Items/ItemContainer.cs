@@ -9,7 +9,6 @@ namespace Platformer.JobFair.Mechanics.Items
     public class ItemContainer : MonoBehaviour
     {
         [SerializeField] private PlayerController plrController = default;
-        [SerializeField] private ItemLocator itemLocator = default;
         
         private Item equippedItem = default;
 
@@ -21,19 +20,6 @@ namespace Platformer.JobFair.Mechanics.Items
         private void TryInjectDefaultReferences()
         {
             plrController ??= GetComponent<PlayerController>();
-            itemLocator ??= GetComponent<ItemLocator>();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                var item = itemLocator.FindFirstItem();
-
-                if (item == null) return;
-                
-                Equip(item);
-            }
         }
 
         public void UseItem()

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Platformer.JobFair.Mechanics.Items;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,11 +10,25 @@ namespace Platformer.JobFair.InputProcessing
     /// </summary>
     public class ButtonInputProcessor : MonoBehaviour
     {
-        [SerializeField] private UnityEvent itemUseEvent = default;
+        [SerializeField] private ItemLocator itemLocator;
         
+        [SerializeField] private UnityEvent<ItemPickup> itemEquipEvent = default;
+        [SerializeField] private UnityEvent itemUseEvent = default;
+
+        private void Awake()
+        {
+            TryInjectDefaultReferences();
+        }
+
+        private void TryInjectDefaultReferences()
+        {
+            itemLocator ??= GetComponent<ItemLocator>();
+        }
+
         private void Update()
         {
             CheckForItemUseInput();
+            CheckForItemEquipInput();
         }
 
         #region Temporary, "mimics" new input system
@@ -27,6 +41,23 @@ namespace Platformer.JobFair.InputProcessing
             {
                 Input_UseItem();
             }
+        }
+        
+        private void CheckForItemEquipInput()
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Input_EquipItem();
+            }
+        }
+
+        private void Input_EquipItem()
+        {
+            var item = itemLocator.FindFirstItem();
+
+            if (item == null) return;
+
+            itemEquipEvent?.Invoke(item);
         }
 
         /// <summary>

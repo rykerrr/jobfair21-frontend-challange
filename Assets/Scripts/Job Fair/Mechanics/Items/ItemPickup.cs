@@ -1,7 +1,6 @@
-using Platformer.JobFair.Mechanics.Items;
 using UnityEngine;
 
-namespace Platformer
+namespace Platformer.JobFair.Mechanics.Items
 {
     /// <summary>
     /// Component class for a "physical" depiction of an item, it's animations and other stuff
