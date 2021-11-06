@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.Events;
 
 namespace Platformer.JobFair.InputProcessing
 {
@@ -8,6 +10,34 @@ namespace Platformer.JobFair.InputProcessing
     /// </summary>
     public class ButtonInputProcessor : MonoBehaviour
     {
+        [SerializeField] private UnityEvent itemUseEvent = default;
+        
+        private void Update()
+        {
+            CheckForItemUseInput();
+        }
+
+        #region Temporary, "mimics" new input system
+        /// <summary>
+        /// Will be removed once new input system is imported if I have time
+        /// </summary>
+        private void CheckForItemUseInput()
+        {
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Input_UseItem();
+            }
+        }
+
+        /// <summary>
+        /// Will also be removed if new input system is imported as this just mimics part of its functionality
+        /// </summary>
+        public void Input_UseItem()
+        {
+            itemUseEvent?.Invoke();
+        }
+        #endregion
+        
         public ButtonState GetButtonState(string button)
         {
             if (Input.GetButtonDown(button))

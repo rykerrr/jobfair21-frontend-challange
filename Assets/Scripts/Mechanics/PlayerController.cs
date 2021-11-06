@@ -216,5 +216,12 @@ namespace Platformer.Mechanics
             InFlight,
             Landed
         }
+
+        [SerializeField] private float bounceVal = 10f;
+        [ContextMenu("Bounce with bounceVal")]
+        public void BounceWithX()
+        {
+            Bounce(bounceVal);
+        }
     }
 }

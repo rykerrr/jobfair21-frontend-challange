@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1824045667}
   - component: {fileID: 114230831923080080}
   - component: {fileID: 1797397224606407994}
+  - component: {fileID: 5584447047090554150}
   - component: {fileID: 6082575806313374961}
   - component: {fileID: 8554420211607976620}
   m_Layer: 13
@@ -277,6 +278,7 @@ MonoBehaviour:
   maxSpeed: 3
   jumpTakeOffSpeed: 7
   controlEnabled: 1
+  bounceVal: 10
 --- !u!114 &1797397224606407994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +291,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83affc61d4d74aad98cbdeb433cf5391, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemUseEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5584447047090554150}
+        m_TargetAssemblyTypeName: Platformer.JobFair.Mechanics.Items.ItemContainer,
+          Assembly-CSharp
+        m_MethodName: UseItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5584447047090554150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1208144871472054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f582210b15fa4c0e90d5b59bee952dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plrController: {fileID: 114230831923080080}
 --- !u!114 &6082575806313374961
 MonoBehaviour:
   m_ObjectHideFlags: 0
