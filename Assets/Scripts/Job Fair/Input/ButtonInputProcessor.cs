@@ -13,11 +13,8 @@ namespace Platformer.JobFair.InputProcessing
         [SerializeField] private ItemLocator itemLocator;
         
         [SerializeField] private UnityEvent<ItemPickup> itemEquipEvent = default;
-        [SerializeField] private UnityEvent<Vector2> mousePosChanged = default;
         [SerializeField] private UnityEvent itemUseEvent = default;
 
-        private Camera mainCam;
-        
         private void Awake()
         {
             TryInjectDefaultReferences();
@@ -26,15 +23,12 @@ namespace Platformer.JobFair.InputProcessing
         private void TryInjectDefaultReferences()
         {
             itemLocator ??= GetComponent<ItemLocator>();
-
-            mainCam = Camera.main;
         }
 
         private void Update()
         {
             CheckForItemUseInput();
             CheckForItemEquipInput();
-            CheckForMousePosChange();
         }
 
         #region Temporary, "mimics" new input system
@@ -47,13 +41,6 @@ namespace Platformer.JobFair.InputProcessing
             {
                 Input_UseItem();
             }
-        }
-
-        private void CheckForMousePosChange()
-        {
-            Vector2 mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            
-            mousePosChanged?.Invoke(mousePos);
         }
         
         private void CheckForItemEquipInput()

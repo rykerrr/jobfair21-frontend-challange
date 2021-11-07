@@ -1,6 +1,7 @@
 using System.IO;
 using Platformer.Core;
 using Platformer.JobFair.Gameplay;
+using Platformer.JobFair.Gameplay.Args;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,8 +22,18 @@ namespace Platformer.JobFair.Mechanics.Items
         public string Description => description;
         public abstract GameObject PhysicalItemPrefab { get; }
 
-        public abstract ItemUseEvent Use();
+        /// <summary>
+        /// Returns the given simulation event in case modification is needed
+        /// May be turned to void if all events that are used with the Items use the Args simulation
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public abstract Simulation.Event Use(SimulationEventArgs args);
         
+        /// <summary>
+        /// Same as above, but for equipping items instead
+        /// </summary>
+        /// <returns></returns>
         public abstract PhysicalItemEquipEvent Equip(); 
 
         #region editor convenience code

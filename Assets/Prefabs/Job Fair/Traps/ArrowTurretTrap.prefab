@@ -57,7 +57,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6261199189261465980}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.5413177, y: -0.103271626, z: -34.45946}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -175,9 +175,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51031f2588df5d146ab6357a4c1a1c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayPerFire: 3
+  delayPerFire: 0.5
   firePoint: {fileID: 6261199188585325014}
-  arrowPrefab: {fileID: 4877172364945618873, guid: 2364c39c0242de745a0dcdd908b56f67,
+  projectilePrefab: {fileID: 4877172364945618873, guid: 2364c39c0242de745a0dcdd908b56f67,
     type: 3}
   audioSource: {fileID: 2969326682400587386}
   audioContainer: {fileID: 6991170917996939399}
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0f1792c5a243440a2e83456ce4283a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowTurret: {fileID: 6261199189261465977}
+  turret: {fileID: 6261199189261465977}
 --- !u!114 &6991170917996939399
 MonoBehaviour:
   m_ObjectHideFlags: 0

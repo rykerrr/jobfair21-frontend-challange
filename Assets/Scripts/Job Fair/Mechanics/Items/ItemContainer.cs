@@ -1,4 +1,7 @@
-﻿using Platformer.Mechanics;
+﻿using System;
+using Platformer.JobFair.Gameplay;
+using Platformer.JobFair.Gameplay.Args;
+using Platformer.Mechanics;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics.Items
@@ -29,13 +32,16 @@ namespace Platformer.JobFair.Mechanics.Items
         {
             if (equippedItem == null) return;
 
-            var itemEv = equippedItem.Use();
-            itemEv.playerController = plrController;
+            // Gets the args for the equipped item's use event
+            // This could have just been placed in the SO, but I wanted to keep that responsibility separate
+            // The SO would have had problems creating the args as well as it requires instances within the scene
+            var args = plrPhysicalItemContainer.GetItemUseEventData();
             
-            // Currently item's are single use, prone to change in the future
+            equippedItem.Use(args);
+            
             UnEquip();
         }
-        
+
         public void Equip(ItemPickup itemPickup)
         {
             if(equippedItem != null) UnEquip();

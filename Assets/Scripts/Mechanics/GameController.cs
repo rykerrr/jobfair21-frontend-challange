@@ -1,6 +1,5 @@
-using System;
 using Platformer.Core;
-using Platformer.JobFair.Mechanics;
+using Platformer.JobFair.Mechanics.Weaponry.ProjectileCreation;
 using Platformer.Model;
 using UnityEngine;
 

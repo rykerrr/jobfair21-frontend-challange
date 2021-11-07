@@ -1,4 +1,5 @@
 ﻿using Platformer.Core;
+using Platformer.JobFair.Gameplay.Args;
 using Platformer.Mechanics;
 
 namespace Platformer.JobFair.Gameplay
@@ -11,5 +12,6 @@ namespace Platformer.JobFair.Gameplay
     public abstract class ItemUseEvent : Simulation.Event<ItemUseEvent>
     {
         public PlayerController playerController;
+        public SimulationEventArgs args;
     }
 }

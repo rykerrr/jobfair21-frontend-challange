@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Platformer.JobFair.Mechanics;
+using Platformer.JobFair.Mechanics.Weaponry.ProjectileCreation;
 using UnityEngine;
 
 namespace Platformer

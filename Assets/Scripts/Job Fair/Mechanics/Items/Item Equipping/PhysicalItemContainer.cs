@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using Platformer.JobFair.Destruction;
+using Platformer.JobFair.Gameplay.Args;
 using UnityEngine;
 
 namespace Platformer
@@ -22,6 +21,19 @@ namespace Platformer
             if (equippedItem == null) return;
 
             equippedItem.GetComponent<IDestructionProcessor>().Destroy();
+        }
+
+        /// <summary>
+        /// This pretty much acts as an abstraction layer to the data
+        /// If you were to expose the equipped item in a property, this would be near to useless
+        /// </summary>
+        /// <returns></returns>
+        public SimulationEventArgs GetItemUseEventData()
+        {
+            if (equippedItem == null || 
+                !equippedItem.TryGetComponent<IPhysicalItem>(out var physItem)) return null;
+
+            return physItem.GetUseData();
         }
     }
 }

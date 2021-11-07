@@ -2,7 +2,6 @@
 using Platformer.JobFair.Mechanics;
 using Platformer.JobFair.Mechanics.Items;
 using Platformer.Mechanics;
-using UnityEngine;
 
 namespace Platformer.JobFair.Gameplay
 {

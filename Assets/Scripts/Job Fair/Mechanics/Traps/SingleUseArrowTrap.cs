@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using Platformer.JobFair.Mechanics.Weaponry;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics.Traps
@@ -10,7 +9,7 @@ namespace Platformer.JobFair.Mechanics.Traps
     /// </summary>
     public class SingleUseArrowTrap : Trap
     {
-        [SerializeField] private ArrowTurret arrowTurret;
+        [SerializeField] private Turret turret;
 
         private bool alreadyFired = false;
 
@@ -23,7 +22,7 @@ namespace Platformer.JobFair.Mechanics.Traps
             // if (alreadyFired || !arrowTurret.CanFire) return;
             // alreadyFired = true;
             
-            arrowTurret.Fire();
+            turret.Fire();
         }
         
         public override void Tick()

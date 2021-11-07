@@ -1,5 +1,6 @@
 using Platformer.Core;
 using Platformer.JobFair.Gameplay;
+using Platformer.JobFair.Gameplay.Args;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics.Items
@@ -19,10 +20,14 @@ namespace Platformer.JobFair.Mechanics.Items
 
         public override GameObject PhysicalItemPrefab { get; }
 
-        public override ItemUseEvent Use()
+        public override Simulation.Event Use(SimulationEventArgs args)
         {
             var ev = Simulation.Schedule<UseExtraJump>();
             ev.data = this;
+            
+            // todo: remove ev.data set above, remove data entirely actually and make it follow the interface pattern
+            // todo: similarly to gun and ProjectileFired
+            ev.args = args;
 
             return ev;
         }
