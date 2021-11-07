@@ -9,7 +9,13 @@ namespace Platformer.JobFair.MainMenu
     public class Level : ScriptableObject
     {
         [SerializeField] private new string name;
-        [SerializeField] private int sceneIndex;
+        
+        /// <summary>
+        /// Opted for string scene management instead of index-based due to the fact that the indices may change
+        /// due to the build order, etc, strings seem like they'll be slightly less of a pain to change here
+        /// </summary>
+        [SerializeField] private string sceneName;
+
         [SerializeField] private Sprite sceneSprite;
 
         private bool levelFinished = default;
@@ -18,7 +24,7 @@ namespace Platformer.JobFair.MainMenu
         private DateTime highscoreTime = default;
 
         public string Name => name;
-        public int SceneIndex => sceneIndex;
+        public string SceneName => sceneName;
         public Sprite SceneSprite => sceneSprite;
         public bool LevelFinished => levelFinished;
         public int Highscore => highscore;

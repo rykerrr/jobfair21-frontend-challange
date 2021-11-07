@@ -65,12 +65,12 @@ namespace Platformer.UI
         
         public void BtnMainMenuClicked()
         {
-            SceneManager.LoadScene("Assets/Scenes/MainScene.unity", LoadSceneMode.Single);
+            SceneManager.LoadScene("MainMenu Scene", LoadSceneMode.Single);
         }
 
         public void BtnReplayClicked()
         {
-            SceneManager.LoadScene("Assets/Scenes/LevelScene.unity", LoadSceneMode.Single);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
         #endregion Event Handlers

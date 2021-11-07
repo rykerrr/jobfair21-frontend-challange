@@ -62,7 +62,7 @@ namespace Platformer.JobFair.MainMenu
         #region event handlers
         public void OnClick_LoadLevel()
         {
-            SceneManager.LoadScene(listing.SceneIndex);
+            SceneManager.LoadScene(listing.SceneName);
         }
 
         public void OnClick_Cancel()

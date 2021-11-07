@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Platformer.Mechanics;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics.Traps
@@ -18,7 +19,7 @@ namespace Platformer.JobFair.Mechanics.Traps
                 trap.Tick();
             }
         }
-        
+
         private void OnTriggerStay2D(Collider2D other)
         {
             TickTraps();

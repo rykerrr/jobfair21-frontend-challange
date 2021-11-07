@@ -1,4 +1,5 @@
-﻿using Platformer.JobFair.Mechanics.Collisions;
+﻿using System.Collections.Generic;
+using Platformer.JobFair.Mechanics.Collisions;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics
@@ -22,11 +23,11 @@ namespace Platformer.JobFair.Mechanics
 
         public IFireProjectile ProjectileSpawner => projectileSpawner;
         
-        private ICollisionProcessor playerHitCollisionProcessor;
+        private ICollisionProcessor[] collisionProcessors;
 
         private void Awake()
         {
-            playerHitCollisionProcessor = GetComponent<ICollisionProcessor>();
+            collisionProcessors = GetComponents<ICollisionProcessor>();
         }
         
         /// <summary>
@@ -45,7 +46,10 @@ namespace Platformer.JobFair.Mechanics
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            playerHitCollisionProcessor.ProcessCollision(other.gameObject);
+            foreach (var collisionProcessor in collisionProcessors)
+            {
+                collisionProcessor.ProcessCollision(other.gameObject);
+            }
         }
     }
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Level 3
   m_EditorClassIdentifier: 
   name: Level 3
-  sceneIndex: 2
+  sceneName: Level 3
   sceneSprite: {fileID: 21300000, guid: 30efd09d063374386920ef39a98be3a5, type: 3}
