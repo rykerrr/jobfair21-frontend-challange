@@ -1,3 +1,4 @@
+using Platformer.Model;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -62,6 +63,8 @@ namespace Platformer.JobFair.MainMenu
         #region event handlers
         public void OnClick_LoadLevel()
         {
+            GameDatabase.Instance.CurrentUser.CurrentLevelName = listing.SceneName;
+            
             SceneManager.LoadScene(listing.SceneName);
         }
 

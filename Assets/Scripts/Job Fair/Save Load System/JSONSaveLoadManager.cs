@@ -8,10 +8,11 @@ namespace Platformer.JobFair.SaveLoad
 {
     public class JSONSaveLoadManager : MonoBehaviour
     {
-        [SerializeField] private string saveFileName = "LevelHighscoreData.txt";
+        private static string saveFileName = "LevelHighscoreData.txt";
 
         private LevelSelectionPanelUI panelUi;
 
+        [Serializable]
         public struct OwnedHighscoreData
         {
             public string levelName;
@@ -23,12 +24,16 @@ namespace Platformer.JobFair.SaveLoad
             panelUi = GetComponent<LevelSelectionPanelUI>();
         }
 
-        public void SaveLevelHighscores(params Level[] levels)
+        public static void SaveLevelHighscores(params Level[] levels)
         {
             var json = GetLevelsAsJson(levels);
             
             var path = Path.Combine(Application.persistentDataPath, saveFileName);
-            if (File.Exists(path)) File.Create(path);
+            if (!File.Exists(path))
+            {
+                var fStream = File.Create(path);
+                fStream.Close();
+            }
             
             File.WriteAllText(path, json);
         }
@@ -46,15 +51,19 @@ namespace Platformer.JobFair.SaveLoad
             return ConvertJsonToOwnedHighscoreStructs(json);
         }
 
-        private string GetLevelsAsJson(Level[] levels)
+        private static string GetLevelsAsJson(Level[] levels)
         {
             var highscores = levels.Select(x => new OwnedHighscoreData() {levelName = x.Name, data = x.HighscoreData}).ToArray();
+            
+            Debug.Log(highscores.Length);
             
             return JsonHelper.ToJson(highscores, true);
         }
 
         private OwnedHighscoreData[] ConvertJsonToOwnedHighscoreStructs(string json)
         {
+            if (string.IsNullOrEmpty(json)) return null;
+            
             OwnedHighscoreData[] datas = JsonHelper.FromJson<OwnedHighscoreData>(json);
 
             return datas;
@@ -63,12 +72,12 @@ namespace Platformer.JobFair.SaveLoad
         #region editor methods
 #if UNITY_EDITOR
         [ContextMenu("Try save high scroes thing")]
-        public void TrySaveHighscoresThing() => SaveLevelHighscores(panelUi.Levels);
+        public void TrySaveHighscoresThing() => SaveLevelHighscores(LevelSelectionPanelUI.Levels);
 
         [ContextMenu("Try Save Load high scores thing")]
         public void TrySaveLoadHighscores()
         {
-            LogOwnedHighscoreDataArr(ConvertJsonToOwnedHighscoreStructs(GetLevelsAsJson(panelUi.Levels)));
+            LogOwnedHighscoreDataArr(ConvertJsonToOwnedHighscoreStructs(GetLevelsAsJson(LevelSelectionPanelUI.Levels)));
         }
 
         private void LogOwnedHighscoreDataArr(params OwnedHighscoreData[] datas)

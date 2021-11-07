@@ -1,4 +1,8 @@
+using System;
+using System.Linq;
 using Platformer.Core;
+using Platformer.JobFair.MainMenu;
+using Platformer.JobFair.SaveLoad;
 using Platformer.Mechanics;
 using Platformer.Model;
 using UnityEngine;
@@ -21,6 +25,15 @@ namespace Platformer.Gameplay
         {
             model.player.Animator.SetTrigger(Victory);
             model.player.controlEnabled = false;
+
+            var curUser = GameDatabase.Instance.CurrentUser;
+
+            var e = LevelSelectionPanelUI.Levels.First(x => x.Name == curUser.CurrentLevelName);
+            e.LoadLevelScoreData(
+                new LevelHighscoreData() {highscore = curUser.Score, highscoreSetter = curUser.Username, highscoreTime = DateTime.Now, levelFinished = true});
+            
+            JSONSaveLoadManager.SaveLevelHighscores(LevelSelectionPanelUI.Levels);
+            
         }
     }
 }

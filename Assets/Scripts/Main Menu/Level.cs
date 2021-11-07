@@ -27,8 +27,8 @@ namespace Platformer.JobFair.MainMenu
 
         public void LoadLevelScoreData(LevelHighscoreData data)
         {
-            if (!highscoreData.levelFinished) return;
-
+            if (!data.levelFinished) return;
+            
             highscoreData.levelFinished = true;
             highscoreData.highscore = data.highscore;
             highscoreData.highscoreSetter = data.highscoreSetter;

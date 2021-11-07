@@ -20,7 +20,7 @@ namespace Platformer.JobFair.MainMenu
 
         private JSONSaveLoadManager jsonSaveLoad = default;
         
-        public Level[] Levels { get; set; }
+        public static Level[] Levels { get; set; }
 
         private void Awake()
         {
@@ -32,7 +32,10 @@ namespace Platformer.JobFair.MainMenu
 
         private void InitLevels()
         {
-            Levels = Resources.LoadAll<Level>(levelsLocationInResources);
+            if (Levels == null || Levels.Length == 0)
+            {
+                Levels = Resources.LoadAll<Level>(levelsLocationInResources);
+            }
             
             LoadHighscores();   
         }
@@ -75,7 +78,7 @@ namespace Platformer.JobFair.MainMenu
         #region editor methods
 #if UNITY_EDITOR
         [ContextMenu("Save loaded level high scores")]
-        public void SaveLoadedLevelHighscores() => jsonSaveLoad.SaveLevelHighscores(Levels);
+        public void SaveLoadedLevelHighscores() => JSONSaveLoadManager.SaveLevelHighscores(Levels);
 #endif
 
         #endregion
