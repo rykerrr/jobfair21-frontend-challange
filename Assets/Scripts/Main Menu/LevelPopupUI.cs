@@ -25,7 +25,7 @@ namespace Platformer.JobFair.MainMenu
         {
             levelNameText.text = $"{listing.Name}";
 
-            if (listing.LevelFinished)
+            if (listing.HighscoreData.levelFinished)
             {
                 highscoreLabel.SetActive(true);
                 highscoreSetterLabel.SetActive(true);
@@ -34,9 +34,9 @@ namespace Platformer.JobFair.MainMenu
                 highscoreSetterText.gameObject.SetActive(true);
                 highscoreDateSetText.gameObject.SetActive(true);
                 
-                highscoreText.text = $"{listing.Highscore}";
-                highscoreSetterText.text = $"{listing.HighscoreSetter}";
-                highscoreDateSetText.text = $"{listing.HighscoreTime}";
+                highscoreText.text = $"{listing.HighscoreData.highscore}";
+                highscoreSetterText.text = $"{listing.HighscoreData.highscoreSetter}";
+                highscoreDateSetText.text = $"{listing.HighscoreData.highscoreTime}";
             }
             else
             {
@@ -49,7 +49,7 @@ namespace Platformer.JobFair.MainMenu
                 highscoreDateSetText.gameObject.SetActive(false);
             }
             
-            levelFinishedImage.color = listing.LevelFinished ? Color.green : Color.red;
+            levelFinishedImage.color = listing.HighscoreData.levelFinished ? Color.green : Color.red;
         }
 
         public void SetLevel(Level listing)

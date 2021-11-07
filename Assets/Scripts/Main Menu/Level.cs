@@ -18,22 +18,21 @@ namespace Platformer.JobFair.MainMenu
 
         [SerializeField] private Sprite sceneSprite;
 
-        private bool levelFinished = default;
-        private int highscore = default;
-        private string highscoreSetter = default;
-        private DateTime highscoreTime = default;
+        [SerializeField] private LevelHighscoreData highscoreData;
 
         public string Name => name;
         public string SceneName => sceneName;
         public Sprite SceneSprite => sceneSprite;
-        public bool LevelFinished => levelFinished;
-        public int Highscore => highscore;
-        public string HighscoreSetter => highscoreSetter;
-        public DateTime HighscoreTime => highscoreTime;
+        public LevelHighscoreData HighscoreData => highscoreData;
 
-        public void LoadLevelScoreData()
+        public void LoadLevelScoreData(LevelHighscoreData data)
         {
-            
+            if (!highscoreData.levelFinished) return;
+
+            highscoreData.levelFinished = true;
+            highscoreData.highscore = data.highscore;
+            highscoreData.highscoreSetter = data.highscoreSetter;
+            highscoreData.highscoreTime = data.highscoreTime;
         }
 
         #region editor convenience code

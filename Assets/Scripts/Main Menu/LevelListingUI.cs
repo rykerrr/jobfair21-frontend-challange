@@ -18,7 +18,7 @@ namespace Platformer.JobFair.MainMenu
 
         private void Start()
         {
-            listing.LoadLevelScoreData();
+            // listing.LoadLevelScoreData();
             
             UpdateUI();
         }
@@ -48,7 +48,7 @@ namespace Platformer.JobFair.MainMenu
         {
             levelNameText.text = $"{listing.Name}";
 
-            levelFinishedImage.color = listing.LevelFinished ? Color.green : Color.red;
+            levelFinishedImage.color = listing.HighscoreData.levelFinished ? Color.green : Color.red;
         }
     }
 }

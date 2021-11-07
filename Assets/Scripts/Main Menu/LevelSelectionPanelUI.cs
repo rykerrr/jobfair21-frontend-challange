@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Platformer.JobFair.SaveLoad;
 using UnityEngine;
 
 namespace Platformer.JobFair.MainMenu
@@ -16,18 +18,45 @@ namespace Platformer.JobFair.MainMenu
         private static string levelsLocationInResources = "Game Data/Levels";
         private readonly List<LevelListingUI> listings = new List<LevelListingUI>();
 
+        private JSONSaveLoadManager jsonSaveLoad = default;
+        
+        public Level[] Levels { get; set; }
+
         private void Awake()
         {
-            LoadLevels();
+            jsonSaveLoad = GetComponent<JSONSaveLoadManager>();
+            
+            InitLevels();
+            CreateLevelListings();
         }
 
-        private void LoadLevels()
+        private void InitLevels()
         {
-            var levels = Resources.LoadAll<Level>(levelsLocationInResources);
+            Levels = Resources.LoadAll<Level>(levelsLocationInResources);
+            
+            LoadHighscores();   
+        }
 
+        private void LoadHighscores()
+        {
+            var ownedHighscores = jsonSaveLoad.LoadLevelHighscores();
+            if (ownedHighscores == null) return;
+            
+            Debug.Log("Highscore data loading imminent");
+            
+            foreach (var ownedHighscore in ownedHighscores)
+            {
+                var level = Levels.First(x => x.Name == ownedHighscore.levelName);
+                
+                level.LoadLevelScoreData(ownedHighscore.data);
+            }
+        }
+
+        private void CreateLevelListings()
+        {
             var path = Path.Combine(Application.dataPath, levelsLocationInResources);
             
-            foreach (var level in levels)
+            foreach (var level in Levels)
             {
                 listings.Add(CreateListing(level));
             }
@@ -42,5 +71,13 @@ namespace Platformer.JobFair.MainMenu
 
             return listingClone;
         }
+        
+        #region editor methods
+#if UNITY_EDITOR
+        [ContextMenu("Save loaded level high scores")]
+        public void SaveLoadedLevelHighscores() => jsonSaveLoad.SaveLevelHighscores(Levels);
+#endif
+
+        #endregion
     }
 }
