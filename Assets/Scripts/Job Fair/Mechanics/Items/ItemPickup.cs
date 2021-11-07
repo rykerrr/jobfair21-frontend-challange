@@ -11,5 +11,15 @@ namespace Platformer.JobFair.Mechanics.Items
         [SerializeField] private Item item = default;
 
         public Item Item => item;
+
+        public void SwapWithItem(Item item)
+        {
+            
+        }
+        
+        public void PickUp()
+        {
+            
+        }
     }
 }

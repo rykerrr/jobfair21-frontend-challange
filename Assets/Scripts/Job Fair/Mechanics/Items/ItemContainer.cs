@@ -9,6 +9,7 @@ namespace Platformer.JobFair.Mechanics.Items
     public class ItemContainer : MonoBehaviour
     {
         [SerializeField] private PlayerController plrController = default;
+        [SerializeField] private PhysicalItemContainer plrPhysicalItemContainer = default;
         
         private Item equippedItem = default;
 
@@ -20,6 +21,8 @@ namespace Platformer.JobFair.Mechanics.Items
         private void TryInjectDefaultReferences()
         {
             plrController ??= GetComponent<PlayerController>();
+            
+            if(plrPhysicalItemContainer == null) Debug.LogError("Player Physical Item Container is null", this);
         }
 
         public void UseItem()
@@ -35,14 +38,31 @@ namespace Platformer.JobFair.Mechanics.Items
         
         public void Equip(ItemPickup itemPickup)
         {
-            if(equippedItem) UnEquip();
+            if(equippedItem != null) UnEquip();
             
             equippedItem = itemPickup.Item;
+            
+            var ev = equippedItem.Equip();
+
+            if (ev == null) return;
+            ev.physicalItemContainer = plrPhysicalItemContainer;
         }
 
         public void UnEquip()
         {
             equippedItem = null;
+
+            plrPhysicalItemContainer.TryUnEquip();
         }
+
+        #region editor methods
+#if UNITY_EDITOR
+        [ContextMenu("Log equipped item")]
+        public void LogEquippedItem()
+        {
+            Debug.Log(equippedItem);
+        }
+#endif        
+        #endregion
     }
 }

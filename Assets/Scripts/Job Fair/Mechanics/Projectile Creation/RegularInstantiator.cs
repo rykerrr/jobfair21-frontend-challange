@@ -15,5 +15,15 @@ namespace Platformer.JobFair.Mechanics
 
             return clone;
         }
+
+        public GameObject CreateProjectile(GameObject prefab, Transform parent)
+        {
+            var clone = CreateProjectile(prefab, Vector3.zero, Quaternion.identity).transform;
+
+            clone.parent = parent;
+            clone.localPosition = Vector3.zero;
+
+            return clone.gameObject;
+        }
     }
 }

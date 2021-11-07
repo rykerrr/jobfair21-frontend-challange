@@ -15,5 +15,6 @@ MonoBehaviour:
   name: Gauss Pistol
   description: Fire a bullet that will kill an enemy on hit
   itemIcon: {fileID: 0}
-  projectilePrefab: {fileID: 0}
   bulletCount: 1
+  physicalItemPrefab: {fileID: 7685945387071980554, guid: 9777551ff7b807143b275e736ebb1bba,
+    type: 3}

@@ -7,6 +7,8 @@ namespace Platformer.JobFair.Mechanics
     /// Simple Implementation of a GameObject based pool (Prefab-Instance pairs)
     /// Choice for this is due to the possibility of multiple prefabs existing, but having the same script
     /// or the same script properties, but different scale, collider, effects, etc
+    /// You can probably swap this out for ObjectPool<T> if you decided to change to
+    /// unity version 2021.1
     /// </summary>
     public class GameObjectPoolManager : MonoBehaviour, IProjectileManager
     {
@@ -56,7 +58,17 @@ namespace Platformer.JobFair.Mechanics
 
             return obj;
         }
-        
+
+        public GameObject CreateProjectile(GameObject prefab, Transform parent)
+        {
+            var clone = CreateProjectile(prefab, Vector3.zero, Quaternion.identity).transform;
+
+            clone.parent = parent;
+            clone.localPosition = Vector3.zero;
+
+            return clone.gameObject;
+        }
+
         /// <summary>
         /// Return pooled object or instantiate new one
         /// </summary>

@@ -1,9 +1,6 @@
 ﻿using System.Collections;
-using System.Runtime.CompilerServices;
-using Newtonsoft.Json.Serialization;
 using Platformer.JobFair.Mechanics.Items;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Platformer.JobFair.Gameplay
 {

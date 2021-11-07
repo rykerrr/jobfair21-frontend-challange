@@ -12,16 +12,24 @@ namespace Platformer.JobFair.Mechanics.Items
     [CreateAssetMenu(menuName = "Items/Extra Jump", fileName = "New Extra Jump")]
     public class ExtraJump : Item
     {
+        [Header("Extra Jump Preferences")]
         [SerializeField] private float jumpVelocity = 7f;
 
         public float JumpVelocity => jumpVelocity;
-        
+
+        public override GameObject PhysicalItemPrefab { get; }
+
         public override ItemUseEvent Use()
         {
             var ev = Simulation.Schedule<UseExtraJump>();
             ev.data = this;
 
             return ev;
+        }
+
+        public override PhysicalItemEquipEvent Equip()
+        {
+            return null;
         }
     }
 }

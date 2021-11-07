@@ -1,6 +1,7 @@
 ﻿using Platformer.Core;
 using Platformer.JobFair.Mechanics.Items;
 using Platformer.Mechanics;
+using UnityEngine;
 
 namespace Platformer.JobFair.Gameplay
 {
@@ -10,6 +11,8 @@ namespace Platformer.JobFair.Gameplay
 
         public override void Execute()
         {
+            Debug.Log("Pew pew pew!");
+            
             throw new System.NotImplementedException();
         }
     }

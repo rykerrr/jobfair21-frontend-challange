@@ -1,6 +1,4 @@
-﻿using Platformer.Core;
-using Platformer.JobFair.Mechanics.Items;
-using Platformer.Mechanics;
+﻿using Platformer.JobFair.Mechanics.Items;
 
 namespace Platformer.JobFair.Gameplay
 {

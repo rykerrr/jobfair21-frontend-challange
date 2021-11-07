@@ -8,6 +8,8 @@ namespace Platformer
 {
     /// <summary>
     /// Works with GameObjectPoolManager to achieve an object pooling effect
+    /// You can probably swap this out for ObjectPool<T> if you decided to change to
+    /// unity version 2021.1
     /// </summary>
     public class PooledDestruction : MonoBehaviour, IDestructionProcessor
     {

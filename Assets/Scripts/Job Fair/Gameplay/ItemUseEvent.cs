@@ -8,7 +8,7 @@ namespace Platformer.JobFair.Gameplay
     /// Thus essentially keeping bare-bones logic from scriptable objects and keeping them as data
     /// containers but with a bit more purpose
     /// </summary>
-    public abstract class ItemUseEvent : Simulation.Event<UseExtraJump>
+    public abstract class ItemUseEvent : Simulation.Event<ItemUseEvent>
     {
         public PlayerController playerController;
     }

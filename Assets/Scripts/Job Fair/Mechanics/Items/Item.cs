@@ -12,15 +12,18 @@ namespace Platformer.JobFair.Mechanics.Items
     public abstract class Item : ScriptableObject
     {
         [Header("Item Preferences")]
-        [SerializeField] protected new string name;
-        [SerializeField] protected string description;
+        [SerializeField] protected new string name = default;
+        [SerializeField] protected string description = default;
         
-        [SerializeField] protected Sprite itemIcon;
-        
+        [SerializeField] protected Sprite itemIcon = default;
+
         public string ItemName => name;
         public string Description => description;
+        public abstract GameObject PhysicalItemPrefab { get; }
 
         public abstract ItemUseEvent Use();
+        
+        public abstract PhysicalItemEquipEvent Equip(); 
 
         #region editor convenience code
         protected virtual void OnValidate()
