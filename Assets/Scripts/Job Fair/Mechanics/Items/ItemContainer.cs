@@ -11,13 +11,14 @@ namespace Platformer.JobFair.Mechanics.Items
     /// </summary>
     public class ItemContainer : MonoBehaviour
     {
-        [SerializeField] private PlayerController plrController = default;
         [SerializeField] private PhysicalItemContainer plrPhysicalItemContainer = default;
         
         private Item equippedItem = default;
 
         public event Action<Item> onItemEquipped = delegate { };
         public event Action onItemUnequipped = delegate { };
+
+        public Item EquippedItem => equippedItem;
         
         private void Awake()
         {
@@ -26,8 +27,6 @@ namespace Platformer.JobFair.Mechanics.Items
         
         private void TryInjectDefaultReferences()
         {
-            plrController ??= GetComponent<PlayerController>();
-            
             if(plrPhysicalItemContainer == null) Debug.LogError("Player Physical Item Container is null", this);
         }
 

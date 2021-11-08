@@ -42,5 +42,17 @@ namespace Platformer.JobFair.Mechanics.Items
             }
             else destructionProcessor.Destroy();
         }
+        
+        #region event methods
+        
+#if UNITY_EDITOR
+        /// <summary>
+        /// For automating setting the icon normally through the method
+        /// </summary>
+        [ContextMenu("Call UpdateDisplay")]
+        public void CallUpdateDisplay() => UpdateDisplay();
+#endif
+
+        #endregion
     }
 }
