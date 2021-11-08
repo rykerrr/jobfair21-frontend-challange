@@ -15,11 +15,10 @@ namespace Platformer.JobFair.Mechanics
 
         [Header("References")] 
         [SerializeField] private Rigidbody2D thisRb = default;
-        [SerializeField] private SpriteRenderer spriteRenderer = default;
         
-        [Header("Set by self or injected, shown for debug")]
-        [SerializeField] private IFireProjectile projectileSpawner = default;
         #endregion
+
+        private IFireProjectile projectileSpawner = default;
 
         public IFireProjectile ProjectileSpawner => projectileSpawner;
         

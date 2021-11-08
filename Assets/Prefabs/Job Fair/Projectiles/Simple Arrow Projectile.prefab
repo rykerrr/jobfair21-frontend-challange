@@ -401,9 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 516201a98e7744a78d33c4224dd07168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 160
+  speed: 300
   thisRb: {fileID: 4877172364945619014}
-  spriteRenderer: {fileID: 0}
 --- !u!114 &3916982532640744126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,7 +456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71d5472fe273f1d459f4b07407ab5f60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 3
+  lifetime: 3.5
 --- !u!1001 &9024530150016055817
 PrefabInstance:
   m_ObjectHideFlags: 0

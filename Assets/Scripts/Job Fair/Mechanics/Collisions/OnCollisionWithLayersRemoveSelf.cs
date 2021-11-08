@@ -32,9 +32,6 @@ namespace Platformer.JobFair.Mechanics.Collisions
             {
                 onCollisionSuccess?.Invoke();
                 
-                Debug.Log($"what did i hit {other}", this);
-                Debug.Break();
-                
                 destructionProcessor.Destroy();
             }
         }

@@ -42,6 +42,9 @@ namespace Platformer.Mechanics
             //Register all tokens so they can work with this controller.
             for (var i = 0; i < tokens.Count; i++)
             {
+                // yes this can happen although it means that a token was removed from the scene but not the tokencontroller
+                if (tokens[i] == null) continue;
+                
                 tokens[i].InitToken(this, i);
             }
         }
