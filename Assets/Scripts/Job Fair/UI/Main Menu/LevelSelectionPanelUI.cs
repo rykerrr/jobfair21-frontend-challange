@@ -53,8 +53,6 @@ namespace Platformer.JobFair.UI.MainMenu
             var ownedHighscores = jsonSaveLoad.LoadLevelHighscores();
             if (ownedHighscores == null) return;
             
-            Debug.Log("Highscore data loading imminent");
-            
             foreach (var ownedHighscore in ownedHighscores)
             {
                 var level = Levels.First(x => x.Name == ownedHighscore.levelName);

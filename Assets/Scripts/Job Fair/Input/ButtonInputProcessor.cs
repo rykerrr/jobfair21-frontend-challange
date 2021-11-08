@@ -55,11 +55,11 @@ namespace Platformer.JobFair.InputProcessing
 
         private void Input_EquipItem()
         {
-            var item = itemLocator.FindFirstItem();
+            var itemPickup = itemLocator.FindFirstItem();
+            
+            if (itemPickup == null) return;
 
-            if (item == null) return;
-
-            itemEquipEvent?.Invoke(item);
+            itemEquipEvent?.Invoke(itemPickup);
         }
 
         /// <summary>

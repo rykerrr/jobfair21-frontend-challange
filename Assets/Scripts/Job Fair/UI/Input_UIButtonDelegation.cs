@@ -57,10 +57,11 @@ namespace Platformer.JobFair.UI
         public void OnClick_TryEquipItem()
         {
             var itemPickup = itemLocator.FindFirstItem();
+
             if (itemPickup == null) return;
             
             // need iteminrangeevent in itemlocator or smth
-            itemEquipText.text = $"Equip item: {itemPickup.Item.name}";
+            // itemEquipText.text = $"Equip item: {itemPickup.Item.name}";
             plrItemContainer.Equip(itemPickup);
         }
 
