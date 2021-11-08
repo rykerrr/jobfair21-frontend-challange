@@ -20,8 +20,6 @@ namespace Platformer
 
         public void ProcessCollision(GameObject other)
         {
-            Debug.Log($"collided with {other}");
-            
             if (whatIsHittable == (whatIsHittable | (1 << other.layer)))
             {
                 onCollisionSuccess?.Invoke();
