@@ -7,6 +7,9 @@ using UnityEngine;
 
 namespace Platformer
 {
+    /// <summary>
+    /// Used by the arrow projectile to allow for it to kill enemies
+    /// </summary>
     public class OnCollisionKillEntityWithHealthAndDestroySelf : MonoBehaviour, ICollisionProcessor
     {
         public event Action onCollisionSuccess;

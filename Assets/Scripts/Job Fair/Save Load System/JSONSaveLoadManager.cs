@@ -6,12 +6,21 @@ using UnityEngine;
 
 namespace Platformer.JobFair.SaveLoad
 {
+    /// <summary>
+    /// Main class for saving/loading highscore data with JSON
+    /// </summary>
     public class JSONSaveLoadManager : MonoBehaviour
     {
         private static string saveFileName = "LevelHighscoreData.txt";
 
         private LevelSelectionPanelUI panelUi;
 
+        /// <summary>
+        /// This is sort of a wrapper over the LevelHighscoreData so that we can locate the Level assets by name
+        /// and then proceed to set the highscore data
+        /// If we didn't do that, we wouldn't know what belongs to what unless we used a multiple file approach
+        /// But that can get very bothersome very quickly
+        /// </summary>
         [Serializable]
         public struct OwnedHighscoreData
         {
@@ -21,9 +30,20 @@ namespace Platformer.JobFair.SaveLoad
 
         private void Awake()
         {
+            TryInjectDefaultReferences();
+        }
+
+        private void TryInjectDefaultReferences()
+        {
             panelUi = GetComponent<LevelSelectionPanelUI>();
         }
 
+        /// <summary>
+        /// Static in order to allow for it to be called from PlayerEnteredVictoryZone and other events
+        /// This can definitely be much better written, the Level collection itself is static for the same reason above
+        /// This class itself isn't very SOLID compliant either, but it does the job and it was written in a hurry
+        /// </summary>
+        /// <param name="levels"></param>
         public static void SaveLevelHighscores(params Level[] levels)
         {
             var json = GetLevelsAsJson(levels);
@@ -51,15 +71,24 @@ namespace Platformer.JobFair.SaveLoad
             return ConvertJsonToOwnedHighscoreStructs(json);
         }
 
+        /// <summary>
+        /// Converts levels to json by "projecting" them into the wrapper class
+        /// </summary>
+        /// <param name="levels"></param>
+        /// <returns></returns>
         private static string GetLevelsAsJson(Level[] levels)
         {
             var highscores = levels.Select(x => new OwnedHighscoreData() {levelName = x.Name, data = x.HighscoreData}).ToArray();
             
-            Debug.Log(highscores.Length);
-            
             return JsonHelper.ToJson(highscores, true);
         }
 
+        /// <summary>
+        /// Converts the JSON (unless the string is empty, e.g the save file is empty) to the wrapped structs so that we can
+        /// map them to their respective levels
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
         private OwnedHighscoreData[] ConvertJsonToOwnedHighscoreStructs(string json)
         {
             if (string.IsNullOrEmpty(json)) return null;

@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Platformer.JobFair.UI.MainMenu
 {
+    /// <summary>
+    /// Class responsible for displaying the Level assets
+    /// </summary>
     public class LevelSelectionPanelUI : MonoBehaviour
     {
         [Header("References")] 
@@ -29,7 +32,7 @@ namespace Platformer.JobFair.UI.MainMenu
             InitLevels();
             CreateLevelListings();
         }
-
+        
         private void InitLevels()
         {
             if (Levels == null || Levels.Length == 0)
@@ -40,6 +43,11 @@ namespace Platformer.JobFair.UI.MainMenu
             LoadHighscores();   
         }
 
+        /// <summary>
+        /// The actual mapping of the wrapped HighscoreData class (OwnedHighscoreData) happens here
+        /// Should definitely be delegated as there's no reason the level selection panel should be responsible
+        /// for loading the levels, if it's already responsible for displaying them
+        /// </summary>
         private void LoadHighscores()
         {
             var ownedHighscores = jsonSaveLoad.LoadLevelHighscores();
@@ -57,14 +65,19 @@ namespace Platformer.JobFair.UI.MainMenu
 
         private void CreateLevelListings()
         {
-            var path = Path.Combine(Application.dataPath, levelsLocationInResources);
-            
             foreach (var level in Levels)
             {
                 listings.Add(CreateListing(level));
             }
         }
 
+        /// <summary>
+        /// Creates a level listing and initializes it with the given level and popup reference
+        /// The popup reference injection is needed as, when you click on the listing, it shows the popup
+        /// But due to that it also has to initialize the popup with it's level reference
+        /// </summary>
+        /// <param name="level"></param>
+        /// <returns></returns>
         private LevelListingUI CreateListing(Level level)
         {
             var listingClone = Instantiate(listingPrefab, selectionPanelContent);

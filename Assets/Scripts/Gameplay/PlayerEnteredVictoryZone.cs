@@ -27,13 +27,20 @@ namespace Platformer.Gameplay
             model.player.controlEnabled = false;
 
             var curUser = GameDatabase.Instance.CurrentUser;
+            var curLevelAsset = curUser.CurrentLevel;
 
-            var curLevelAsset = LevelSelectionPanelUI.Levels.First(x => x.Name == curUser.CurrentLevelName);
-            curLevelAsset.SetLevelScoreData(
-                new LevelHighscoreData() {highscore = curUser.Score, highscoreSetter = curUser.Username, highscoreTime = DateTime.Now, levelFinished = true});
-            
-            JSONSaveLoadManager.SaveLevelHighscores(LevelSelectionPanelUI.Levels);
-            
+            // Check whether we have a new highscore for the given level
+            if (curUser.Score > curLevelAsset.HighscoreData.highscore)
+            {
+                var newHs = new LevelHighscoreData()
+                {
+                    highscore = curUser.Score, highscoreSetter = curUser.Username, highscoreTime = DateTime.Now,
+                    levelFinished = true
+                };
+                
+                curLevelAsset.SetLevelScoreData(newHs);
+                JSONSaveLoadManager.SaveLevelHighscores(LevelSelectionPanelUI.Levels);
+            }
         }
     }
 }

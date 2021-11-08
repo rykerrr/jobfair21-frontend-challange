@@ -1,4 +1,5 @@
 using Platformer.Gameplay;
+using Platformer.JobFair.UI.MainMenu;
 
 namespace Platformer.Model
 {
@@ -49,7 +50,7 @@ namespace Platformer.Model
             public int EnemiesKilled { get; internal set; }
             public int Score => Tokens * 10 + EnemiesKilled * 100;
             public bool UsernameWasSet { get; private set; } = false;
-            public string CurrentLevelName = "";
+            public Level CurrentLevel { get; set; }
             private string username;
             
 

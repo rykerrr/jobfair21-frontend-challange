@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 namespace Platformer.JobFair.UI.MainMenu
 {
+    /// <summary>
+    /// Class responsible for displaying data for a "selected" level, once a level is clicked it shows this object
+    /// </summary>
     public class LevelPopupUI : MonoBehaviour
     {
         [Header("UI References")]
@@ -15,18 +18,27 @@ namespace Platformer.JobFair.UI.MainMenu
         [SerializeField] private TextMeshProUGUI levelNameText = default;
         [SerializeField] private Image levelFinishedImage = default;
 
+        // The labels are just TMP text elements that don't get changed, specifically they're "static"
+        // They display a label like "Highscore: ", "Highscore setter: ", etc, so that the UI can be placed more in-line
+        // The auto size would make Highscore setter: Name in almost every case smaller than Highscore: Score, so
+        // the label was separated from the text display itself
+        
         [SerializeField] private GameObject highscoreLabel = default;
         [SerializeField] private GameObject highscoreSetterLabel = default;
         [SerializeField] private GameObject highscoreDateSetLabel = default;
 
+        private Level level;
         
-        private Level listing;
-        
+        /// <summary>
+        /// Disables highscore-related data if no highscore was set
+        /// A high score will be set once a level is won, which means that the level will have been finished
+        /// If it's not finished, there can't be a highscore
+        /// </summary>
         private void UpdateUI()
         {
-            levelNameText.text = $"{listing.Name}";
+            levelNameText.text = $"{level.Name}";
 
-            if (listing.HighscoreData.levelFinished)
+            if (level.HighscoreData.levelFinished)
             {
                 highscoreLabel.SetActive(true);
                 highscoreSetterLabel.SetActive(true);
@@ -35,9 +47,9 @@ namespace Platformer.JobFair.UI.MainMenu
                 highscoreSetterText.gameObject.SetActive(true);
                 highscoreDateSetText.gameObject.SetActive(true);
                 
-                highscoreText.text = $"{listing.HighscoreData.highscore}";
-                highscoreSetterText.text = $"{listing.HighscoreData.highscoreSetter}";
-                highscoreDateSetText.text = $"{listing.HighscoreData.highscoreTime}";
+                highscoreText.text = $"{level.HighscoreData.highscore}";
+                highscoreSetterText.text = $"{level.HighscoreData.highscoreSetter}";
+                highscoreDateSetText.text = $"{level.HighscoreData.highscoreTime}";
             }
             else
             {
@@ -50,12 +62,16 @@ namespace Platformer.JobFair.UI.MainMenu
                 highscoreDateSetText.gameObject.SetActive(false);
             }
             
-            levelFinishedImage.color = listing.HighscoreData.levelFinished ? Color.green : Color.red;
+            levelFinishedImage.color = level.HighscoreData.levelFinished ? Color.green : Color.red;
         }
 
-        public void SetLevel(Level listing)
+        /// <summary>
+        /// Used to "inject" the level reference by the selected LevelListing
+        /// </summary>
+        /// <param name="level"></param>
+        public void SetLevel(Level level)
         {
-            this.listing = listing;
+            this.level = level;
 
             UpdateUI();
         }
@@ -63,14 +79,7 @@ namespace Platformer.JobFair.UI.MainMenu
         #region event handlers
         public void OnClick_LoadLevel()
         {
-            GameDatabase.Instance.CurrentUser.CurrentLevelName = listing.SceneName;
-            
-            SceneManager.LoadScene(listing.SceneName);
-        }
-
-        public void OnClick_Cancel()
-        {
-            gameObject.SetActive(false);
+            GameDatabase.Instance.CurrentUser.CurrentLevel = level;
         }
         #endregion
     }

@@ -5,6 +5,10 @@ using UnityEngine;
 
 namespace Platformer.JobFair.UI.MainMenu
 {
+    /// <summary>
+    /// Asset that holds level-related data
+    /// Sort of like a scene wrapper
+    /// </summary>
     [CreateAssetMenu(menuName = "Levels/New Level Listing", fileName = "New Level Listing")]
     public class Level : ScriptableObject
     {
@@ -25,6 +29,10 @@ namespace Platformer.JobFair.UI.MainMenu
         public Sprite SceneSprite => sceneSprite;
         public LevelHighscoreData HighscoreData => highscoreData;
 
+        /// <summary>
+        /// Updates the highscore data, such as when loaded from a file or when a level was won
+        /// </summary>
+        /// <param name="data"></param>
         public void SetLevelScoreData(LevelHighscoreData data)
         {
             if (!data.levelFinished) return;

@@ -20,6 +20,11 @@ namespace Platformer.JobFair.InputProcessing
             mainCam = Camera.main;
         }
 
+        /// <summary>
+        /// Pretty much the same as it's counterpart for android, disables itself if it's on android to avoid
+        /// unnecessary update calls if the platform isn't android and it's not in the editor
+        /// If it's in the editor it's left as on due to Unity remote working directly with the editor
+        /// </summary>
         private void DisableIfNotPC()
         {
             // Debug.Log(Application.isEditor);
