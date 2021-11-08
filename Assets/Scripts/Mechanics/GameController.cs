@@ -1,3 +1,4 @@
+using System.Linq;
 using Platformer.Core;
 using Platformer.JobFair.Mechanics.Weaponry.ProjectileCreation;
 using Platformer.Model;
@@ -25,7 +26,35 @@ namespace Platformer.Mechanics
 
         private void Awake()
         {
+            TryInjectDefaultReferences();
+        }
+
+        private void TryInjectDefaultReferences()
+        {
             CreationManager = GetComponent<ICreationManager>();
+
+            if (GameDatabase.Instance.CurrentUser.CurrentLevel == null)
+            {
+                TrySetLevelAsCurrentScene();
+            }
+        }
+
+        /// <summary>
+        /// This is specifically needed when you don't start the game from the main menu
+        /// Since it's supposed to be started from there, so that a level can be selected and set here for high score setting
+        /// </summary>
+        private static void TrySetLevelAsCurrentScene()
+        {
+            var curSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            
+            var tryFindLevel =
+                JobFair.UI.MainMenu.LevelSelectionPanelUI.Levels.FirstOrDefault(x =>
+                    x.name == curSceneName);
+
+            if (tryFindLevel != null)
+            {
+                GameDatabase.Instance.CurrentUser.CurrentLevel = tryFindLevel;
+            }
         }
 
         private void OnEnable()

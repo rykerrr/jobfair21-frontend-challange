@@ -58,7 +58,13 @@ namespace Platformer.JobFair.SaveLoad
             File.WriteAllText(path, json);
         }
 
-        public OwnedHighscoreData[] LoadLevelHighscores()
+        /// <summary>
+        /// Turned static so that this may be initialized within the Levels getter
+        /// Levels won't be initialized if the game wasn't started from the main menu scene (this should never happen beyond the editor
+        /// but even if it happens from the editor we want to avoid it crashing)
+        /// </summary>
+        /// <returns></returns>
+        public static OwnedHighscoreData[] LoadLevelHighscores()
         {
             string json = "";
 
@@ -89,7 +95,7 @@ namespace Platformer.JobFair.SaveLoad
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        private OwnedHighscoreData[] ConvertJsonToOwnedHighscoreStructs(string json)
+        private static OwnedHighscoreData[] ConvertJsonToOwnedHighscoreStructs(string json)
         {
             if (string.IsNullOrEmpty(json)) return null;
             

@@ -11,52 +11,69 @@ namespace Platformer.JobFair.UI.MainMenu
     /// </summary>
     public class LevelSelectionPanelUI : MonoBehaviour
     {
-        [Header("References")] 
-        [SerializeField] private Transform selectionPanelContent = default;
+        [Header("References")] [SerializeField]
+        private Transform selectionPanelContent = default;
         [SerializeField] private LevelPopupUI popup = default;
-        
-        [Header("Preferences")]
-        [SerializeField] private LevelListingUI listingPrefab = default;
-        
+
+        [Header("Preferences")] [SerializeField]
+        private LevelListingUI listingPrefab = default;
+
         private static string levelsLocationInResources = "Game Data/Levels";
         private readonly List<LevelListingUI> listings = new List<LevelListingUI>();
 
         private JSONSaveLoadManager jsonSaveLoad = default;
-        
-        public static Level[] Levels { get; set; }
+
+        private static Level[] levels;
+
+        public static Level[] Levels
+        {
+            get
+            {
+                if (levels == null)
+                {
+                    InitLevels();
+                }
+
+                return levels;
+            }
+            private set => levels = value;
+        }
 
         private void Awake()
         {
             jsonSaveLoad = GetComponent<JSONSaveLoadManager>();
-            
-            InitLevels();
+
+            if(Levels == null) InitLevels();
             CreateLevelListings();
         }
-        
-        private void InitLevels()
+
+        /// <summary>
+        /// Turned static for the same reason as LoadHighscores
+        /// </summary>
+        private static void InitLevels()
         {
-            if (Levels == null || Levels.Length == 0)
-            {
-                Levels = Resources.LoadAll<Level>(levelsLocationInResources);
-            }
-            
-            LoadHighscores();   
+            Levels = Resources.LoadAll<Level>(levelsLocationInResources);
+
+            LoadHighscores();
         }
 
         /// <summary>
         /// The actual mapping of the wrapped HighscoreData class (OwnedHighscoreData) happens here
         /// Should definitely be delegated as there's no reason the level selection panel should be responsible
         /// for loading the levels, if it's already responsible for displaying them
+        /// Turned static so that it can be called from GameController, specifically when a scene was loaded not from the main menu
+        /// This would mean that the Levels array wasn't initialized in the first place, so we can't get the highscores of a level
+        /// Which in turn means we can't actually set a highscore once we finish the level
         /// </summary>
-        private void LoadHighscores()
+        private static void LoadHighscores()
         {
-            var ownedHighscores = jsonSaveLoad.LoadLevelHighscores();
+            var ownedHighscores = JSONSaveLoadManager.LoadLevelHighscores();
             if (ownedHighscores == null) return;
-            
+
             foreach (var ownedHighscore in ownedHighscores)
             {
                 var level = Levels.First(x => x.Name == ownedHighscore.levelName);
-                
+
                 level.SetLevelScoreData(ownedHighscore.data);
             }
         }
@@ -79,14 +96,15 @@ namespace Platformer.JobFair.UI.MainMenu
         private LevelListingUI CreateListing(Level level)
         {
             var listingClone = Instantiate(listingPrefab, selectionPanelContent);
-            
+
             listingClone.SetLevel(level);
             listingClone.SetPopup(popup);
 
             return listingClone;
         }
-        
+
         #region editor methods
+
 #if UNITY_EDITOR
         [ContextMenu("Save loaded level high scores")]
         public void SaveLoadedLevelHighscores() => JSONSaveLoadManager.SaveLevelHighscores(Levels);
