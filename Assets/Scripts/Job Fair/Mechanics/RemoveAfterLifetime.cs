@@ -20,9 +20,10 @@ namespace Platformer.JobFair.Mechanics
         private void OnEnable()
         {
             lifeTimer ??= new DownTimer(lifetime);
-            lifeTimer.OnTimerEnd += destructionProcessor.Destroy;
             
             lifeTimer.Reset();
+
+            lifeTimer.OnTimerEnd += destructionProcessor.Destroy;
         }
 
         private void Update()

@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 6082575806313374961}
   - component: {fileID: 8554420211607976620}
   - component: {fileID: 838423053}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -340,7 +340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f582210b15fa4c0e90d5b59bee952dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plrController: {fileID: 114230831923080080}
   plrPhysicalItemContainer: {fileID: 0}
 --- !u!114 &6082575806313374961
 MonoBehaviour:

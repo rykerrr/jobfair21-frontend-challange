@@ -1,9 +1,8 @@
 using System;
 using Platformer.JobFair.Destruction;
-using Platformer.JobFair.Mechanics.Collisions;
 using UnityEngine;
 
-namespace Platformer
+namespace Platformer.JobFair.Mechanics.Collisions
 {
     /// <summary>
     /// Used mostly with the arrow, the layermask could be set dynamically during runtime with an easy modification but
@@ -25,10 +24,17 @@ namespace Platformer
 
         public void ProcessCollision(GameObject other)
         {
+            // Quick fix as apparently 2 collisions were triggered
+            // Not sure why though...
+            if (!gameObject.activeSelf) return;
+            
             if (whatIsHittable == (whatIsHittable | (1 << other.layer)))
             {
                 onCollisionSuccess?.Invoke();
-
+                
+                Debug.Log($"what did i hit {other}", this);
+                Debug.Break();
+                
                 destructionProcessor.Destroy();
             }
         }
