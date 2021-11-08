@@ -25,7 +25,11 @@ namespace Platformer.JobFair.Mechanics.Items
             
             return ev;
         }
-
+        
+        /// <summary>
+        /// Could be moved to the Item base class as it's pretty much the same now everywhere
+        /// </summary>
+        /// <returns></returns>
         public override PhysicalItemEquipEvent Equip()
         {
             var ev = Simulation.Schedule<PhysicalItemEquipEvent>();

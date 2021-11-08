@@ -1,3 +1,4 @@
+using Platformer.JobFair.Destruction;
 using UnityEngine;
 
 namespace Platformer.JobFair.Mechanics.Items
@@ -8,18 +9,38 @@ namespace Platformer.JobFair.Mechanics.Items
     /// </summary>
     public class ItemPickup : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField] private SpriteRenderer spriteRenderer = default;
+
+        [Header("Preferences")]
         [SerializeField] private Item item = default;
+        
+        private IDestructionProcessor destructionProcessor;
 
         public Item Item => item;
 
-        public void SwapWithItem(Item item)
+        private void Awake()
         {
+            destructionProcessor = GetComponent<IDestructionProcessor>();
             
+            UpdateDisplay();
+        }
+
+        private void UpdateDisplay()
+        {
+            spriteRenderer.sprite = item.ItemIcon;
         }
         
-        public void PickUp()
+        public void PickUp(Item item)
         {
+            this.item = item;
             
+            // if there's a new item, meaning we swapped, update the display
+            if (this.item != null)
+            {
+                UpdateDisplay();
+            }
+            else destructionProcessor.Destroy();
         }
     }
 }

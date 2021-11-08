@@ -1,14 +1,17 @@
-﻿using Platformer.JobFair.Mechanics.Items;
+﻿using Platformer.JobFair.Gameplay.Args;
+using Platformer.JobFair.Mechanics.Items;
 
 namespace Platformer.JobFair.Gameplay
 {
-    public class UseExtraJump : ItemUseEvent
+    public class UseExtraJump : ArgsSimulationEvent<UseExtraJump>
     {
         public ExtraJump data;
         
         public override void Execute()
         {
-            playerController.Bounce(data.JumpVelocity);
+            var itemArgs = (ArgsItem) args;
+            
+            itemArgs.PlrController.Bounce(((ExtraJump)(itemArgs.Item)).JumpVelocity);
         }
     }
 }

@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Extra Jump
   description: Technically double jump
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 6448011b459a14b05969ad3bf1a44890, type: 3}
   jumpVelocity: 7
+  physicalItemPrefab: {fileID: 8363141501873182906, guid: e0f6f8408b014564e83e2e4778348191,
+    type: 3}

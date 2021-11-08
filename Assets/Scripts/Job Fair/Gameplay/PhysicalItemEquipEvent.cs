@@ -8,11 +8,11 @@ namespace Platformer.JobFair.Gameplay
     public class PhysicalItemEquipEvent : Simulation.Event<PhysicalItemEquipEvent>
     {
         public PhysicalItemContainer physicalItemContainer;
-        public Item itemData;
+        public Item itemData { get; set; }
 
         public override void Execute()
         {
-            var clone = GameController.Instance.ProjectileManager.CreateProjectile(itemData.PhysicalItemPrefab
+            var clone = GameController.Instance.CreationManager.CreateObj(itemData.PhysicalItemPrefab
                 , physicalItemContainer.transform);
 
             clone.transform.parent = physicalItemContainer.transform;

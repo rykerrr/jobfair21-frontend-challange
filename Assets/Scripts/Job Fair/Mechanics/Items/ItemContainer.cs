@@ -47,12 +47,21 @@ namespace Platformer.JobFair.Mechanics.Items
 
         public void Equip(ItemPickup itemPickup)
         {
-            if(equippedItem != null) UnEquip();
+            Item prevItem = null;
+            
+            if (equippedItem != null)
+            {
+                prevItem = equippedItem;
+                
+                UnEquip();
+            }
             
             equippedItem = itemPickup.Item;
             
             var ev = equippedItem.Equip();
             onItemEquipped?.Invoke(itemPickup.Item);
+
+            itemPickup.PickUp(prevItem);
 
             if (ev == null) return;
             ev.physicalItemContainer = plrPhysicalItemContainer;

@@ -22,8 +22,8 @@ namespace Platformer.JobFair.InputProcessing
 
         private void DisableIfNotPC()
         {
-            Debug.Log(Application.isEditor);
-            Debug.Log(Application.platform);
+            // Debug.Log(Application.isEditor);
+            // Debug.Log(Application.platform);
             
             if(!Application.isEditor && Application.platform != RuntimePlatform.WindowsPlayer) gameObject.SetActive(false);
         }

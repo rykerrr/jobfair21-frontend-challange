@@ -20,8 +20,8 @@ namespace Platformer.JobFair.InputProcessing
 
         private void DisableIfNotAndroid()
         {
-            Debug.Log(Application.isEditor);
-            Debug.Log(Application.platform);
+            // Debug.Log(Application.isEditor);
+            // Debug.Log(Application.platform);
             
             if (!Application.isEditor && Application.platform != RuntimePlatform.Android) gameObject.SetActive(false);
         }

@@ -14,11 +14,12 @@ namespace Platformer.JobFair.Mechanics.Items
         [Header("Speed Powerup Preferences")]
         [SerializeField] private float speedMultiplier = 1.5f;
         [SerializeField] private float duration = 2f;
+        [SerializeField] protected GameObject physicalItemPrefab = default;
 
         public float SpeedMultiplier => speedMultiplier;
         public float Duration => duration;
 
-        public override GameObject PhysicalItemPrefab { get; }
+        public override GameObject PhysicalItemPrefab => physicalItemPrefab;
         
         public override Simulation.Event Use(SimulationEventArgs args)
         {
@@ -31,10 +32,17 @@ namespace Platformer.JobFair.Mechanics.Items
 
             return ev;
         }
-
+        
+        /// <summary>
+        /// Could be moved to the Item base class as it's pretty much the same now everywhere
+        /// </summary>
+        /// <returns></returns>
         public override PhysicalItemEquipEvent Equip()
         {
-            return null;
+            var ev = Simulation.Schedule<PhysicalItemEquipEvent>();
+            ev.itemData = this;
+
+            return ev;
         }
     }
 }

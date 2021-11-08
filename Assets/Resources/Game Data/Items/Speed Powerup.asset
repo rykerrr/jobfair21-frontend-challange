@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Speed Powerup
   description: Speed is Key
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: ae2c8da0a2b52a94693061615670c2aa, type: 3}
   speedMultiplier: 1.5
   duration: 2
+  physicalItemPrefab: {fileID: 873545481207415940, guid: 45bef0308d1a633448853f6ebd579af6,
+    type: 3}

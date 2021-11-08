@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Gauss Pistol
   description: Fire a bullet that will kill an enemy on hit
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 21300000, guid: 3992f564c616645b0aa6d00135510fdc, type: 3}
   bulletCount: 1
   physicalItemPrefab: {fileID: 7685945387071980554, guid: 9777551ff7b807143b275e736ebb1bba,
     type: 3}

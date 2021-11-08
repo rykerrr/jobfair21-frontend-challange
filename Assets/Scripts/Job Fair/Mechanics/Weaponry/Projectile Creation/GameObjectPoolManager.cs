@@ -10,7 +10,7 @@ namespace Platformer.JobFair.Mechanics.Weaponry.ProjectileCreation
     /// You can probably swap this out for ObjectPool<T> if you decided to change to
     /// unity version 2021.1
     /// </summary>
-    public class GameObjectPoolManager : MonoBehaviour, IProjectileManager
+    public class GameObjectPoolManager : MonoBehaviour, ICreationManager
     {
         private readonly Dictionary<GameObject, Queue<GameObject>> pool =
             new Dictionary<GameObject, Queue<GameObject>>();
@@ -47,7 +47,7 @@ namespace Platformer.JobFair.Mechanics.Weaponry.ProjectileCreation
         /// <param name="position"></param>
         /// <param name="rotation"></param>
         /// <returns></returns>
-        public GameObject CreateProjectile(GameObject prefab, Vector3 position, Quaternion rotation)
+        public GameObject CreateObj(GameObject prefab, Vector3 position, Quaternion rotation)
         {
             var obj = GetFromPool(prefab);
 
@@ -59,9 +59,9 @@ namespace Platformer.JobFair.Mechanics.Weaponry.ProjectileCreation
             return obj;
         }
 
-        public GameObject CreateProjectile(GameObject prefab, Transform parent)
+        public GameObject CreateObj(GameObject prefab, Transform parent)
         {
-            var clone = CreateProjectile(prefab, Vector3.zero, Quaternion.identity).transform;
+            var clone = CreateObj(prefab, Vector3.zero, Quaternion.identity).transform;
 
             clone.parent = parent;
             clone.localPosition = Vector3.zero;

@@ -10,8 +10,10 @@ namespace Platformer.JobFair.InputProcessing
     /// </summary>
     public class ButtonInputProcessor : MonoBehaviour
     {
+        [Header("References")]
         [SerializeField] private ItemLocator itemLocator;
         
+        [Header("Event handling")]
         [SerializeField] private UnityEvent<ItemPickup> itemEquipEvent = default;
         [SerializeField] private UnityEvent itemUseEvent = default;
 
