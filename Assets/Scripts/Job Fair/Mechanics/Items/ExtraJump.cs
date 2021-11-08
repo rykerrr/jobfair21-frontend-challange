@@ -24,7 +24,7 @@ namespace Platformer.JobFair.Mechanics.Items
         public override Simulation.Event Use(SimulationEventArgs args)
         {
             var ev = Simulation.Schedule<UseExtraJump>();
-            ((ArgsItem)args).Item = this;
+            ((ItemArgs)args).Item = this;
 
             ev.args = args;
 

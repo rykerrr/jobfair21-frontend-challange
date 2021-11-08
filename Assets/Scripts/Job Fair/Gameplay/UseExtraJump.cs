@@ -12,7 +12,7 @@ namespace Platformer.JobFair.Gameplay
         /// </summary>
         public override void Execute()
         {
-            var itemArgs = (ArgsItem) args;
+            var itemArgs = (ItemArgs) args;
             
             itemArgs.PlrController.Bounce(((ExtraJump)(itemArgs.Item)).JumpVelocity);
         }

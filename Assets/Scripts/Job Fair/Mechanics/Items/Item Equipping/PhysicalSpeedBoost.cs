@@ -32,7 +32,7 @@ namespace Platformer.Job_Fair.Mechanics.Items.Item_Equipping
 
         public SimulationEventArgs GetUseData()
         {
-            return new ArgsItem() {PlrController = GameController.Instance.model.player};
+            return new ItemArgs() {PlrController = GameController.Instance.model.player};
         }
     }
 }

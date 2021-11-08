@@ -1,16 +1,19 @@
 ﻿using System.Collections;
+using Platformer.JobFair.Gameplay.Args;
 using Platformer.JobFair.Mechanics.Items;
 using UnityEngine;
 
 namespace Platformer.JobFair.Gameplay
 {
-    public class UseSpeedPowerup : ItemUseEvent
+    public class UseSpeedPowerup : ArgsSimulationEvent<UseSpeedPowerup>
     {
-        public SpeedPowerup data;
-
+        private ItemArgs itemArgs;
+        
         public override void Execute()
         {
-            playerController.StartCoroutine(SpeedUpCoroutine());
+            itemArgs = (ItemArgs) args;
+            
+            itemArgs.PlrController.StartCoroutine(SpeedUpCoroutine());
         }
 
         /// <summary>
@@ -24,10 +27,18 @@ namespace Platformer.JobFair.Gameplay
         /// <returns></returns>
         private IEnumerator SpeedUpCoroutine()
         {
+            var item = (SpeedPowerup)itemArgs.Item;
+            var playerController = itemArgs.PlrController;
+         
+            Debug.Log(item);
+            Debug.Log(args);
+            Debug.Log(itemArgs);
+            Debug.Log(playerController);
+            
             var prevSpeed = playerController.MaxSpeed;
-            playerController.curMaxSpeed = prevSpeed * data.SpeedMultiplier;
+            playerController.curMaxSpeed = prevSpeed * item.SpeedMultiplier;
 
-            yield return new WaitForSeconds(data.Duration);
+            yield return new WaitForSeconds(item.Duration);
 
             playerController.curMaxSpeed = prevSpeed;
         }

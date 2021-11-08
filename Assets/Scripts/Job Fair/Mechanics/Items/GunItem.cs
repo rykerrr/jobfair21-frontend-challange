@@ -21,6 +21,7 @@ namespace Platformer.JobFair.Mechanics.Items
         public override Simulation.Event Use(SimulationEventArgs args)
         {
             var ev = Simulation.Schedule<ProjectileFired>();
+            
             ev.args = args;
             
             return ev;

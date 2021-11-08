@@ -24,10 +24,8 @@ namespace Platformer.JobFair.Mechanics.Items
         public override Simulation.Event Use(SimulationEventArgs args)
         {
             var ev = Simulation.Schedule<UseSpeedPowerup>();
-            ev.data = this;
-            
-            // todo: remove ev.data set above, remove data entirely actually and make it follow the interface pattern
-            // todo: similarly to gun and ProjectileFired
+            ((ItemArgs)args).Item = this;
+
             ev.args = args;
 
             return ev;
