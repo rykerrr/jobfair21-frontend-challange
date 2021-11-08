@@ -48,7 +48,7 @@ namespace Platformer.Mechanics
             var curSceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             
             var tryFindLevel =
-                JobFair.UI.MainMenu.LevelSelectionPanelUI.Levels.FirstOrDefault(x =>
+                JobFair.Utility.LevelManager.Levels.FirstOrDefault(x =>
                     x.name == curSceneName);
 
             if (tryFindLevel != null)

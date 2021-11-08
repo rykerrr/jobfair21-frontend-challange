@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Platformer.JobFair.SaveLoad;
+using Platformer.JobFair.Utility;
 using UnityEngine;
 
 namespace Platformer.JobFair.UI.MainMenu
@@ -18,69 +19,16 @@ namespace Platformer.JobFair.UI.MainMenu
         [Header("Preferences")] [SerializeField]
         private LevelListingUI listingPrefab = default;
 
-        private static string levelsLocationInResources = "Game Data/Levels";
         private readonly List<LevelListingUI> listings = new List<LevelListingUI>();
-
-        private JSONSaveLoadManager jsonSaveLoad = default;
-
-        private static Level[] levels;
-
-        public static Level[] Levels
-        {
-            get
-            {
-                if (levels == null)
-                {
-                    InitLevels();
-                }
-
-                return levels;
-            }
-            private set => levels = value;
-        }
 
         private void Awake()
         {
-            jsonSaveLoad = GetComponent<JSONSaveLoadManager>();
-
-            if(Levels == null) InitLevels();
             CreateLevelListings();
-        }
-
-        /// <summary>
-        /// Turned static for the same reason as LoadHighscores
-        /// </summary>
-        private static void InitLevels()
-        {
-            Levels = Resources.LoadAll<Level>(levelsLocationInResources);
-
-            LoadHighscores();
-        }
-
-        /// <summary>
-        /// The actual mapping of the wrapped HighscoreData class (OwnedHighscoreData) happens here
-        /// Should definitely be delegated as there's no reason the level selection panel should be responsible
-        /// for loading the levels, if it's already responsible for displaying them
-        /// Turned static so that it can be called from GameController, specifically when a scene was loaded not from the main menu
-        /// This would mean that the Levels array wasn't initialized in the first place, so we can't get the highscores of a level
-        /// Which in turn means we can't actually set a highscore once we finish the level
-        /// </summary>
-        private static void LoadHighscores()
-        {
-            var ownedHighscores = JSONSaveLoadManager.LoadLevelHighscores();
-            if (ownedHighscores == null) return;
-
-            foreach (var ownedHighscore in ownedHighscores)
-            {
-                var level = Levels.First(x => x.Name == ownedHighscore.levelName);
-
-                level.SetLevelScoreData(ownedHighscore.data);
-            }
         }
 
         private void CreateLevelListings()
         {
-            foreach (var level in Levels)
+            foreach (var level in LevelManager.Levels)
             {
                 listings.Add(CreateListing(level));
             }
@@ -107,7 +55,7 @@ namespace Platformer.JobFair.UI.MainMenu
 
 #if UNITY_EDITOR
         [ContextMenu("Save loaded level high scores")]
-        public void SaveLoadedLevelHighscores() => JSONSaveLoadManager.SaveLevelHighscores(Levels);
+        public void SaveLoadedLevelHighscores() => JSONSaveLoadManager.SaveLevelHighscores();
 #endif
 
         #endregion

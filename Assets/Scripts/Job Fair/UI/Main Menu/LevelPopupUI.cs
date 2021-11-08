@@ -1,3 +1,4 @@
+using System;
 using Platformer.Model;
 using TMPro;
 using UnityEngine;
@@ -49,7 +50,7 @@ namespace Platformer.JobFair.UI.MainMenu
                 
                 highscoreText.text = $"{level.HighscoreData.highscore}";
                 highscoreSetterText.text = $"{level.HighscoreData.highscoreSetter}";
-                highscoreDateSetText.text = $"{level.HighscoreData.highscoreTime}";
+                highscoreDateSetText.text = $"{(DateTime)level.HighscoreData.highscoreTime}";
             }
             else
             {
@@ -80,6 +81,8 @@ namespace Platformer.JobFair.UI.MainMenu
         public void OnClick_LoadLevel()
         {
             GameDatabase.Instance.CurrentUser.CurrentLevel = level;
+
+            SceneManager.LoadScene(level.Name);
         }
         #endregion
     }

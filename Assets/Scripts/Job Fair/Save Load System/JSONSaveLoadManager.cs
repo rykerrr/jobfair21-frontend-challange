@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Platformer.JobFair.UI.MainMenu;
+using Platformer.JobFair.Utility;
 using UnityEngine;
 
 namespace Platformer.JobFair.SaveLoad
@@ -9,11 +10,9 @@ namespace Platformer.JobFair.SaveLoad
     /// <summary>
     /// Main class for saving/loading highscore data with JSON
     /// </summary>
-    public class JSONSaveLoadManager : MonoBehaviour
+    public static class JSONSaveLoadManager
     {
         private static string saveFileName = "LevelHighscoreData.txt";
-
-        private LevelSelectionPanelUI panelUi;
 
         /// <summary>
         /// This is sort of a wrapper over the LevelHighscoreData so that we can locate the Level assets by name
@@ -28,40 +27,27 @@ namespace Platformer.JobFair.SaveLoad
             public LevelHighscoreData data;
         }
 
-        private void Awake()
-        {
-            TryInjectDefaultReferences();
-        }
-
-        private void TryInjectDefaultReferences()
-        {
-            panelUi = GetComponent<LevelSelectionPanelUI>();
-        }
-
         /// <summary>
-        /// Static in order to allow for it to be called from PlayerEnteredVictoryZone and other events
-        /// This can definitely be much better written, the Level collection itself is static for the same reason above
-        /// This class itself isn't very SOLID compliant either, but it does the job and it was written in a hurry
+        /// Called from PlayerEnteredVictoryZone and other events that want to save high score data after modifying a level asset
         /// </summary>
         /// <param name="levels"></param>
-        public static void SaveLevelHighscores(params Level[] levels)
+        public static void SaveLevelHighscores()
         {
-            var json = GetLevelsAsJson(levels);
-            
+            var json = GetLevelsAsJson();
+
             var path = Path.Combine(Application.persistentDataPath, saveFileName);
             if (!File.Exists(path))
             {
                 var fStream = File.Create(path);
                 fStream.Close();
             }
-            
+
             File.WriteAllText(path, json);
         }
 
         /// <summary>
-        /// Turned static so that this may be initialized within the Levels getter
-        /// Levels won't be initialized if the game wasn't started from the main menu scene (this should never happen beyond the editor
-        /// but even if it happens from the editor we want to avoid it crashing)
+        /// Loads highscore data from given json file, or creates the default file and saves current level asset state in it
+        /// For a possible bug, due to how scriptable objects behave in the editor, check LevelManager->LoadHighscores
         /// </summary>
         /// <returns></returns>
         public static OwnedHighscoreData[] LoadLevelHighscores()
@@ -70,10 +56,23 @@ namespace Platformer.JobFair.SaveLoad
 
             var path = Path.Combine(Application.persistentDataPath, saveFileName);
 
-            if (!File.Exists(path)) return null;
+            // Makes sure the default file exists if not created
+            bool fileExists;
+            if ((fileExists = File.Exists(path)) == false || string.IsNullOrEmpty(File.ReadAllText(path)))
+            {
+                if (!fileExists)
+                {
+                    var fStream = File.Create(path);
+                    fStream.Close();
+                }
+                
+                SaveLevelHighscores();
+
+                return null;
+            }
 
             json = File.ReadAllText(path);
-            
+
             return ConvertJsonToOwnedHighscoreStructs(json);
         }
 
@@ -82,10 +81,11 @@ namespace Platformer.JobFair.SaveLoad
         /// </summary>
         /// <param name="levels"></param>
         /// <returns></returns>
-        private static string GetLevelsAsJson(Level[] levels)
+        private static string GetLevelsAsJson()
         {
-            var highscores = levels.Select(x => new OwnedHighscoreData() {levelName = x.Name, data = x.HighscoreData}).ToArray();
-            
+            var highscores = LevelManager.Levels
+                .Select(x => new OwnedHighscoreData() {levelName = x.Name, data = x.HighscoreData}).ToArray();
+
             return JsonHelper.ToJson(highscores, true);
         }
 
@@ -98,31 +98,10 @@ namespace Platformer.JobFair.SaveLoad
         private static OwnedHighscoreData[] ConvertJsonToOwnedHighscoreStructs(string json)
         {
             if (string.IsNullOrEmpty(json)) return null;
-            
+
             OwnedHighscoreData[] datas = JsonHelper.FromJson<OwnedHighscoreData>(json);
 
             return datas;
         }
-
-        #region editor methods
-#if UNITY_EDITOR
-        [ContextMenu("Try save high scroes thing")]
-        public void TrySaveHighscoresThing() => SaveLevelHighscores(LevelSelectionPanelUI.Levels);
-
-        [ContextMenu("Try Save Load high scores thing")]
-        public void TrySaveLoadHighscores()
-        {
-            LogOwnedHighscoreDataArr(ConvertJsonToOwnedHighscoreStructs(GetLevelsAsJson(LevelSelectionPanelUI.Levels)));
-        }
-
-        private void LogOwnedHighscoreDataArr(params OwnedHighscoreData[] datas)
-        {
-            foreach (var data in datas)
-            {
-                Debug.Log($"Owner: {data.levelName} Data: {data.data}");
-            }
-        }
-#endif
-        #endregion
     }
 }

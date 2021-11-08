@@ -16,6 +16,6 @@ MonoBehaviour:
   sceneName: Level 2
   sceneSprite: {fileID: 21300000, guid: d88311d2ea92740ed9e0274f02825ccf, type: 3}
   highscoreData:
-    levelFinished: 1
+    levelFinished: 0
     highscore: 3
     highscoreSetter: Bobby

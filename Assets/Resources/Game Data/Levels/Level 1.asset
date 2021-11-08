@@ -15,3 +15,7 @@ MonoBehaviour:
   name: Level 1
   sceneName: Level 1
   sceneSprite: {fileID: 21300000, guid: 2c770ab2ac73b5a4abec3a9d6b016e44, type: 3}
+  highscoreData:
+    levelFinished: 0
+    highscore: 0
+    highscoreSetter: greg

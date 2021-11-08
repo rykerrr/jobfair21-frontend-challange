@@ -1,4 +1,5 @@
 ﻿using System;
+using Platformer.JobFair.SaveLoad;
 
 namespace Platformer.JobFair.UI.MainMenu
 {
@@ -13,6 +14,6 @@ namespace Platformer.JobFair.UI.MainMenu
         public bool levelFinished = default;
         public int highscore = default;
         public string highscoreSetter = default;
-        public DateTime highscoreTime = default;
+        public JsonDateTime highscoreTime = default;
     }
 }

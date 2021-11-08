@@ -3,6 +3,7 @@ using System.Linq;
 using Platformer.Core;
 using Platformer.JobFair.UI.MainMenu;
 using Platformer.JobFair.SaveLoad;
+using Platformer.JobFair.Utility;
 using Platformer.Mechanics;
 using Platformer.Model;
 using UnityEngine;
@@ -29,8 +30,11 @@ namespace Platformer.Gameplay
             var curUser = GameDatabase.Instance.CurrentUser;
             var curLevelAsset = curUser.CurrentLevel;
 
-            // Check whether we have a new highscore for the given level
-            if (curUser.Score > curLevelAsset.HighscoreData.highscore)
+            // Check whether we have a new highscore for the given level, last highscore setter counts
+            var levelNeverCleared = !curLevelAsset.HighscoreData.levelFinished;
+            var curHighscoreBetter = curUser.Score >= curLevelAsset.HighscoreData.highscore;
+            
+            if (levelNeverCleared || curHighscoreBetter)
             {
                 var newHs = new LevelHighscoreData()
                 {
@@ -39,7 +43,7 @@ namespace Platformer.Gameplay
                 };
                 
                 curLevelAsset.SetLevelScoreData(newHs);
-                JSONSaveLoadManager.SaveLevelHighscores(LevelSelectionPanelUI.Levels);
+                JSONSaveLoadManager.SaveLevelHighscores();
             }
         }
     }
