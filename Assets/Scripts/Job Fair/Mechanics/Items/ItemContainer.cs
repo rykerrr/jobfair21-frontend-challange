@@ -16,6 +16,9 @@ namespace Platformer.JobFair.Mechanics.Items
         
         private Item equippedItem = default;
 
+        public event Action<Item> onItemEquipped = delegate { };
+        public event Action onItemUnequipped = delegate { };
+        
         private void Awake()
         {
             TryInjectDefaultReferences();
@@ -49,6 +52,7 @@ namespace Platformer.JobFair.Mechanics.Items
             equippedItem = itemPickup.Item;
             
             var ev = equippedItem.Equip();
+            onItemEquipped?.Invoke(itemPickup.Item);
 
             if (ev == null) return;
             ev.physicalItemContainer = plrPhysicalItemContainer;
@@ -57,6 +61,7 @@ namespace Platformer.JobFair.Mechanics.Items
         public void UnEquip()
         {
             equippedItem = null;
+            onItemUnequipped?.Invoke();
 
             plrPhysicalItemContainer.TryUnEquip();
         }

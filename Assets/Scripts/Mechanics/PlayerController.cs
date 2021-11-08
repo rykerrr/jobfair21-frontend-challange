@@ -57,6 +57,7 @@ namespace Platformer.Mechanics
         private Vector2 move;
         private bool stopJump;
         private bool jump;
+        private bool movingByButton;
         
         public float curMaxSpeed;
         
@@ -84,21 +85,37 @@ namespace Platformer.Mechanics
 
         protected override void Update()
         {
-            if (controlEnabled)
+            if(!movingByButton)
             {
-                move.x = inputProcessor.GetAxis("Horizontal");
-                var jumpButtonState = inputProcessor.GetButtonState("Jump");
+                if (controlEnabled)
+                {
+                    move.x = inputProcessor.GetAxis("Horizontal");
+                    var jumpButtonState = inputProcessor.GetButtonState("Jump");
 
-                ProcessJumping(jumpButtonState);
-            }
-            else
-            {
-                move.x = 0;
+                    ProcessJumping(jumpButtonState);
+                }
+                else
+                {
+                    move.x = 0;
+                }
             }
             
             UpdateJumpState();
             
             base.Update();
+        }
+
+        public void UpdateMoveState(float normalizedHorMovement)
+        {
+            move.x = normalizedHorMovement;
+            movingByButton = true;
+        }
+
+        public void StopMovingByButton() => movingByButton = false;
+
+        public void TryJump()
+        {
+            ProcessJumping(ButtonState.PressedThisFrame);
         }
 
         private void ProcessJumping(ButtonState jumpButtonState)

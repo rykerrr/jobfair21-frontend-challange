@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using Platformer.Core;
-using Platformer.JobFair.MainMenu;
+using Platformer.JobFair.UI.MainMenu;
 using Platformer.JobFair.SaveLoad;
 using Platformer.Mechanics;
 using Platformer.Model;
@@ -28,8 +28,8 @@ namespace Platformer.Gameplay
 
             var curUser = GameDatabase.Instance.CurrentUser;
 
-            var e = LevelSelectionPanelUI.Levels.First(x => x.Name == curUser.CurrentLevelName);
-            e.LoadLevelScoreData(
+            var curLevelAsset = LevelSelectionPanelUI.Levels.First(x => x.Name == curUser.CurrentLevelName);
+            curLevelAsset.SetLevelScoreData(
                 new LevelHighscoreData() {highscore = curUser.Score, highscoreSetter = curUser.Username, highscoreTime = DateTime.Now, levelFinished = true});
             
             JSONSaveLoadManager.SaveLevelHighscores(LevelSelectionPanelUI.Levels);

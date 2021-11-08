@@ -12,13 +12,22 @@ namespace Platformer.JobFair.InputProcessing
         [SerializeField] private UnityEvent<Vector2> mousePosChanged = default;
 
         private Camera mainCam;
-
+        
         private void Awake()
         {
+            DisableIfNotPC();
+            
             mainCam = Camera.main;
         }
 
-        // Update is called once per frame
+        private void DisableIfNotPC()
+        {
+            Debug.Log(Application.isEditor);
+            Debug.Log(Application.platform);
+            
+            if(!Application.isEditor && Application.platform != RuntimePlatform.WindowsPlayer) gameObject.SetActive(false);
+        }
+
         private void Update()
         {
             CheckForMousePosChange();

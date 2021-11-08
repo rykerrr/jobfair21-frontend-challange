@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using Platformer.JobFair.MainMenu;
+using Platformer.JobFair.UI.MainMenu;
 using UnityEngine;
 
 namespace Platformer.JobFair.SaveLoad

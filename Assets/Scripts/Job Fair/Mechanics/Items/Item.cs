@@ -21,6 +21,7 @@ namespace Platformer.JobFair.Mechanics.Items
         public string ItemName => name;
         public string Description => description;
         public abstract GameObject PhysicalItemPrefab { get; }
+        public Sprite ItemIcon => itemIcon;
 
         /// <summary>
         /// Returns the given simulation event in case modification is needed
